@@ -13,3 +13,4 @@ The web application of Backyard Barber which lets users schedule/begin/end mowin
 <a href="https://github.com/davidwood/node-password-hash">Node Password Hash</a> --> Password Hashing<br>
 <a href="http://socket.io/">Socket.io</a> --> Communication Between Application and Mower<br>
 <a href="https://github.com/petkaantonov/bluebird">Bluebird</a> --> Promises<br>
+<a href="https://www.npmjs.com/package/password-hash">Password-Hash</a> --> Password Hashing<br>
