@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="header">
+      <img class="header-logo" src="/images/bb-logo.png">
+    </div>
+  </div>
+  <div class="row">
+    <form class="form-horizontal" name="loginForm">
+      <div class-"errors" ng-messages="loginForm.serialNumber.$error" role="alert">
+        <div ng-message="required">Serial Number or Passcode not provided.</div>
+        <div ng-message="invalid">Serial Number or Passcode is incorrect.</div>
+      </div>
+      <div class="form-group">
+        <input class="form-control" id="inputSerialNumber" name="serialNumber" ng-model="mower.serialNumber" type="serialNumber" placeholder="Serial Number">
+      </div>
+      <div class="form-group">
+        <input class="form-control" id="inputPasscode" name="passcode" ng-model="mower.passcode" type="passcode" placeholder="Passcode">
+      </div>
+      <div class="form-group">
+        <button type="button" ng-click="login(mower, form)">Log in</button>
+      </div>
+    </form>
+  </div>
+</div>
