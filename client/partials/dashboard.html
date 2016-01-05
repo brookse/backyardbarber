@@ -1,0 +1,26 @@
+<div class="dashboard">
+  <div class="dashboard-side-nav">
+
+  </div>
+  <div class="dashboard-inner">
+
+    <nav class="navbar navbar-inverse">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Backyard Barber</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/dashboard/status">Status</a></li>
+        <li><a href="/dashboard/scheduler">Scheduler</a></li>
+        <li><a href="/dashboard/yardmap">Yard Map</a></li>
+        <li ng-controller="logoutController">
+          <a ng-click='logout()' class="btn btn-default navbar-btn pull-right">Logout</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="dashboard-body">
+      <h2>Welcome, {{ username }}!</h2>
+        <p>To begin, select an option above.</p>
+    </div>
+  </div>
+</div>
