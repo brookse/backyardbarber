@@ -1,6 +1,17 @@
 # backyardbarber
 The web application of Backyard Barber which lets users schedule/begin/end mowings, map out yards, and see the status of their mower.
 
+<h2>To Install and Run</h2>
+Clone repository and install dependencies:
+```
+npm install
+bower install
+```
+To run:
+```
+npm start
+```
+
 <h2>Technologies Used</h2>
 <a href="https://www.mongodb.org/">Mongo DB</a> --> Database<br>
 <a href="http://expressjs.com/en/starter/installing.html">Express.js</a> --> Web Framework<br>
