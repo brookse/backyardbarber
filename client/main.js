@@ -16,7 +16,7 @@ myApp.config(function ($routeProvider) {
     }).when('/register', {
       templateUrl: '/partials/register.html',
       controller: 'registerController'
-    }).when('/dashboard/status', {
+/*    }).when('/dashboard/status', {
       templateUrl: '/components/status/status.template.html',
       controller: 'statusController'
     }).when('/dashboard/scheduler', {
@@ -25,7 +25,7 @@ myApp.config(function ($routeProvider) {
     }).when('/dashboard/yardmap', {
       templateUrl: '/components/yardmap/yardmap.template.html',
       controller: 'yardmapController'
-    }).otherwise({redirectTo: '/'});
+*/    }).otherwise({redirectTo: '/'});
 
   //  $locationProvider.html5mode(true);
 });
