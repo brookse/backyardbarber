@@ -1,0 +1,37 @@
+<div class="AddScheduledMowing-inner">
+  <div class="modal-header">
+    <h4 class="modal-title">Add New Schedule</h4>
+  </div>
+  <div class="modal-body addScheduledMowing">
+    <form role="form" name="addScheduleForm">
+      <div class="row space-below">
+        <div class="col-sm-offset-3" ng-messages="addSensorForm.$error">
+          <div class="errors" ng-message="server">{{error}}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-xs-12">
+          <label for="cust-name">Days</label>
+          <!-- add the day selection -->
+          <span class="input-group-addon">
+            <input type="checkbox" aria-label="Sunday"><br>
+            <input type="checkbox" aria-label="Monday"><br>
+            <input type="checkbox" aria-label="Tuesday"><br>
+            <input type="checkbox" aria-label="Wednesday"><br>
+            <input type="checkbox" aria-label="Thursday"><br>
+            <input type="checkbox" aria-label="Friday"><br>
+            <input type="checkbox" aria-label="Saturday"><br>
+          </span>
+        </div>
+        <div class="form-group col-xs-12">
+          <label for="cust-name">Time</label>
+          <!-- add the time selection -->
+          </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">Add</button>
+  </div>
+</div>
