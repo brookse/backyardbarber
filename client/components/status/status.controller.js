@@ -12,8 +12,8 @@ function($scope, $location, AuthService) {
   ];
   var currentStatus = 0;
 
-  $scope.serialnumber = "123456789";
-  $scope.nickname = "Brooks-Marchetti-Heck-Jet-Aleister Household";
+  $scope.serialnumber = AuthService.getUserStatus().username;
+  $scope.nickname = AuthService.getUserStatus().nickname;
   $scope.status = statuses[currentStatus];
   $scope.statusDetail = statusDetails[currentStatus];
   $scope.longitude = "43.0441100";

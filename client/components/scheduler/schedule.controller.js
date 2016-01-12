@@ -6,11 +6,11 @@ function($scope, $location, AuthService) {
   $scope.scheduledMowings = [
     {
       days: ["Monday", "Wednesday"],
-      time: "1 pm"
+      time: "1pm"
     },
     {
       days: ["Saturday"],
-      time: "10 am"
+      time: "10am"
     }
   ];
 
