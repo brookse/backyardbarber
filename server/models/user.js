@@ -8,7 +8,11 @@ var User = new Schema({
   username: String,
   password: String,
   nickname: String,
-  zipcode: Number
+  zipcode: Number,
+  latitude: Number,
+  longitude: Number,
+  elevation: Number,
+  batteryLevel: Number
 });
 
 User.plugin(passportLocalMongoose);

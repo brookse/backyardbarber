@@ -1,6 +1,6 @@
 angular.module('myApp').controller('scheduleController',
 ['$scope', '$location', 'AuthService',
-function($scope, $location, AuthService) {
+function($scope, $location, $modal, AuthService) {
   $scope.message = "schedule message";
 
   $scope.scheduledMowings = [
@@ -22,8 +22,9 @@ function($scope, $location, AuthService) {
     console.log('deleting the schedule');
   };
 
-  $scope.openCreateNewSchedule = function() {
+  $scope.openCreateNewSchedule = function(event) {
     console.log('opening up the new schedule creator')
+    console.log('event:',event)
     var modalInstance = $modal.open({
       animation: $scope.animationsEnabled,
       controller: 'addScheduleModalController',

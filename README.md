@@ -12,6 +12,9 @@ To run:
 npm start
 ```
 
+To use:
+You must register a new user before you can log in.
+
 <h2>Technologies Used</h2>
 <a href="https://www.mongodb.org/">Mongo DB</a> --> Database<br>
 <a href="http://expressjs.com/en/starter/installing.html">Express.js</a> --> Web Framework<br>
