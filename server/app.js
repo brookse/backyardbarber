@@ -15,12 +15,18 @@ mongoose.connect('mongodb://localhost/mean-auth');
 
 // user schema/model
 var User = require('./models/user.js');
+var Obstacle = require('./models/obstacle.js');
+var Schedule = require('./models/schedule.js');
+var Yard = require('./models/yard.js');
 
 // create instance of express
 var app = express();
 
 // require routes
-var routes = require('./routes/api.js');
+var userRoutes = require('./routes/userRoutes.js');
+var obstacleRoutes = require('./routes/obstacleRoutes.js');
+var yardRoutes = require('./routes/yardRoutes.js');
+var scheduleRoutes = require('./routes/scheduleRoutes.js');
 
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')));
@@ -43,7 +49,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // routes
-app.use('/user/', routes);
+app.use('/user/', userRoutes);
+app.use('/obstacles/', obstacleRoutes);
+app.use('/yard/', yardRoutes);
+app.use('/schedules/', scheduleRoutes);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
