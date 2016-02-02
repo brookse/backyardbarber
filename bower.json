@@ -1,0 +1,9 @@
+{
+  "name": "bb",
+  "version": "0.0.0",
+  "homepage": "https://github.com/brookse/backyardbarber",
+  "license": "MIT",
+  "dependencies": {
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
+  }
+}

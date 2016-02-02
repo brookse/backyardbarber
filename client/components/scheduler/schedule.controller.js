@@ -24,7 +24,6 @@ function($scope, $location, $modal, AuthService) {
 
   $scope.openCreateNewSchedule = function(event) {
     console.log('opening up the new schedule creator')
-    console.log('event:',event)
     var modalInstance = $modal.open({
       animation: $scope.animationsEnabled,
       controller: 'addScheduleModalController',

@@ -14,19 +14,40 @@
         <label for="cust-name">Days</label>
         <!-- add the day selection -->
         <span class="input-group-addon">
-          <input type="checkbox" aria-label="Sunday"><br>
-          <input type="checkbox" aria-label="Monday"><br>
-          <input type="checkbox" aria-label="Tuesday"><br>
-          <input type="checkbox" aria-label="Wednesday"><br>
-          <input type="checkbox" aria-label="Thursday"><br>
-          <input type="checkbox" aria-label="Friday"><br>
-          <input type="checkbox" aria-label="Saturday"><br>
+          <input type="checkbox" aria-label="Sunday"><label>Sunday</label><br>
+          <input type="checkbox" aria-label="Monday"><label>Monday</label><br>
+          <input type="checkbox" aria-label="Tuesday"><label>Tuesday</label><br>
+          <input type="checkbox" aria-label="Wednesday"><label>Wednesday</label><br>
+          <input type="checkbox" aria-label="Thursday"><label>Thursday</label><br>
+          <input type="checkbox" aria-label="Friday"><label>Friday</label><br>
+          <input type="checkbox" aria-label="Saturday"><label>Saturday</label><br>
         </span>
       </div>
 
       <div class="form-group col-xs-12">
         <label for="cust-name">Time</label>
         <!-- add the time selection -->
+        <div class="container">
+          <div class="row">
+              <div class='col-sm-6'>
+                  <div class="form-group">
+                      <div class='input-group date' id='datetimepicker3'>
+                          <input type='text' class="form-control" />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-time"></span>
+                          </span>
+                      </div>
+                  </div>
+              </div>
+              <script type="text/javascript">
+                  $(function () {
+                      $('#datetimepicker3').datetimepicker({
+                          format: 'LT'
+                      });
+                  });
+              </script>
+          </div>
+        </div>
       </div>
     </div>
   </form>

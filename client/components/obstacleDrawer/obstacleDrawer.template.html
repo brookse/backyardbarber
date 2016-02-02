@@ -1,0 +1,57 @@
+<div class="obstacleDrawerTemplate" ng-controller="obstacleDrawerController">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>Obstacles <button type="button" class="btn btn-default" ng-click="createObstacle()" aria-label="Previous Status"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></h4>
+    </div>
+    <div class="panel-body">
+      <table>
+        <tr ng-repeat="obstacle in obstacles">
+          <td>
+            <table>
+              <tr>
+                <td>
+                  <h5>{{ obstacle.name }}</h5>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-default pull-right" ng-click="placeInYard()" aria-label="Place in Yard"><span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i>{{ obstacle.description }}</i>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{ obstacle.length }} x {{ obstacle.width }}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+          <!--  <td>
+              <button type="button" class="btn btn-default pull-right" ng-click="placeInYard()" aria-label="Place in Yard">
+                <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i>{{ obstacle.description }}</i>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ obstacle.length }} x {{ obstacle.width }}
+            </td>
+          </tr> -->
+      </table>
+    </div>
+    <div class="panel-heading">
+      <h4>Endpoints</h4>
+    </div>
+    <div class="panel-body">
+      Endpoints
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@ npm install
 bower install
 ```
 To run:
+Open database: `mongod`
 ```
 npm start
 ```

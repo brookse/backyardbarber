@@ -1,0 +1,38 @@
+<div class="createYardTemplate" ng-controller="createYardController">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>Create Yard</h4>
+    </div>
+    <div class="panel-body">
+      <form class="form" ng-submit="createYard()">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <label>
+                <input type="radio" ng-model="inches" value="in" ng-model="createForm.in" aria-label="inches">
+                Inches
+              </label>
+            </span>
+            <span class="input-group-addon">
+              <label>
+                <input type="radio" ng-model="centimeters" value="cm" ng-model="createForm.cm" aria-label="centimeters">
+                Centimeters
+              </label>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Length</label>
+          <input type="text" class="form-control" name="nickname" ng-model="createForm.length" required>
+        </div>
+        <div class="form-group">
+          <label>Width</label>
+          <input type="number" class="form-control" name="zipcode" ng-model="createForm.width" required>
+        </div>
+        <div>
+          <button type="ok" class="btn btn-default pull-right" ng-disabled="disabled">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
