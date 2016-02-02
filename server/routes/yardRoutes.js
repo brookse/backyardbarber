@@ -15,18 +15,19 @@ router.get('/', function(req, res) {
     }
     return res.status(200).json({
       status: 'yards found!',
-      yards: yard
+      yards: yards
     });
   });
 });
 
 /* Create a yard */
 router.post('/', function(req, res, next) {
+  console.log('r:',req.body)
   Yard.create({
-    length: req.body.length,
-    width: req.body.width,
-    units: req.body.units,
-    obstacles: req.body.obstacles
+    length: req.body.yardData.length,
+    width: req.body.yardData.width,
+    units: req.body.yardData.units,
+    obstacles: req.body.yardData.obstacles
   }, function(error, yard) {
     if(error) {
       console.log('error:',error);

@@ -1,7 +1,6 @@
 // user model
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    passportLocalMongoose = require('passport-local-mongoose');
+    Schema = mongoose.Schema;
 
 
 var Yard = new Schema({
@@ -10,7 +9,5 @@ var Yard = new Schema({
   units: String,
   obstacles: []
 });
-
-Yard.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('yards', Yard);
