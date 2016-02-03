@@ -32,8 +32,6 @@ You must register a new user before you can log in.
 
 <h2>API</h2>
 <h3>User</h3>
-Register, Login, Logout, Get<br>
-
 <h4>Register</h4>
 URL: `/user/register`<br>
 BODY:
@@ -61,8 +59,6 @@ URL: `/user/logout`<br>
 BODY: none<br>
 
 <h3>Obstacles</h3>
-Get, Post, Delete<br>
-
 <h4>Get</h4>
 URL: `/obstacles`<br>
 BODY: none
@@ -87,8 +83,6 @@ BODY: none
 <br>
 
 <h3>Yard</h3>
-Get, Post, Delete
-
 <h4>Get</h4>
 URL: `/yard`<br>
 BODY: none
@@ -112,8 +106,6 @@ BODY: none
 <br>
 
 <h3>Schedules</h3>
-Get, Post, Delete
-
 <h4>Get</h4>
 URL: `/schedules`<br>
 BODY: none
@@ -135,8 +127,6 @@ BODY: none
 <br>
 
 <h3>Forecast</h3>
-Get
-
 <h4>Get</h4>
 URL: `/forecast?longitude=longitude&latitude=latitude`<br>
 BODY: none
