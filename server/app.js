@@ -27,6 +27,7 @@ var userRoutes = require('./routes/userRoutes.js');
 var obstacleRoutes = require('./routes/obstacleRoutes.js');
 var yardRoutes = require('./routes/yardRoutes.js');
 var scheduleRoutes = require('./routes/scheduleRoutes.js');
+var forecastRoutes = require('./routes/forecastRoutes.js');
 
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')));
@@ -53,6 +54,7 @@ app.use('/user/', userRoutes);
 app.use('/obstacles/', obstacleRoutes);
 app.use('/yard/', yardRoutes);
 app.use('/schedules/', scheduleRoutes);
+app.use('/forecast/', forecastRoutes);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));
