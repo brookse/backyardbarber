@@ -45,7 +45,6 @@ BODY:
   password: password
 }
 ```
-<br>
 
 <h4>Login</h4>
 URL: `/user/login`<br>
@@ -56,7 +55,6 @@ BODY:
   password: password
 }
 ```
-<br>
 
 <h4>Logout</h4>
 URL: `/user/logout`<br>
@@ -82,7 +80,6 @@ BODY:
   units: units
 }
 ```
-<br>
 
 <h4>Delete</h4>
 URL: `/obstacles/:id`<br>
@@ -108,7 +105,6 @@ BODY:
   obstacles: obstacles
 }
 ```
-<br>
 
 <h4>Delete</h4>
 URL: `/yard/:id`<br>
@@ -132,7 +128,6 @@ BODY:
   time: time
 }
 ```
-<br>
 
 <h4>Delete</h4>
 URL: `/schedules/:id`<br>
