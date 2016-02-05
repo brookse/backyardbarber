@@ -26,6 +26,7 @@ function($scope, $location, AuthService, WeatherService) {
     longitude: $scope.longitude
   }).then(function(fVal) {
     $scope.forecast = fVal;
+    console.log('f:',fVal);
   }).catch(function(err) {
     console.log('e:',err);
   });
@@ -52,6 +53,14 @@ function($scope, $location, AuthService, WeatherService) {
       center: {lat: $scope.latitude, lng: $scope.longitude},
       zoom: 8
     });
-  }
+  };
+
+  $scope.shouldShowDailyWeatherWarning = function() {
+    if($scope.forecast.forecast.currently.precipProbability > .25) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
 }]);

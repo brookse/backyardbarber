@@ -83,6 +83,11 @@
       <h4>Weather</h4>
     </div>
     <div class="panel-body">
+      <div ng-if="shouldShowDailyWeatherWarning()" class="alert alert-warning alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Whoa!</strong> It looks like there's a {{forecast.forecast.currently.precipProbability}}% chance of {{forecast.forecast.currently.precipType}} today. You might not want to mow!
+      </div>
+      <h5><b>Right Now</b></h5>
       <table>
         <tr>
           <td>
@@ -92,7 +97,17 @@
             <b>{{ forecast.forecast.currently.summary}}</b><br>
             Temperature: {{ forecast.forecast.currently.temperature }} &deg; F<br>
             Dew Point: {{ forecast.forecast.currently.dewPoint }}	&deg; F<br>
-            Wind Speed: {{ forecast.forecast.currently.windSpeed }} mph<br><br>
+            Wind Speed: {{ forecast.forecast.currently.windSpeed }} mph<br>
+            Chance of Precipitation: {{ forecast.forecast.currently.precipProbability}}%<br><br>
+          </td>
+        </tr>
+      </table>
+      <h5><b>7 Day Outlook</b></h5>
+      <table>
+        <tr>
+          <td ng-repeat="day in forecast.forecast.daily.data">
+            <img src="images/weather/{{day.icon}}.png"/><br>
+            {{day.summary}}
           </td>
         </tr>
       </table>
