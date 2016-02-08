@@ -1,6 +1,6 @@
 angular.module('myApp').controller('yardmapController',
-['$scope', '$location', 'AuthService',
-function($scope, $location, AuthService) {
+['$scope', '$location', 'AuthService', 'YardService',
+function($scope, $location, AuthService, YardService) {
   var pages = [
     'components/createYard/createYard.template.html',
     'components/obstacleDrawer/obstacleDrawer.template.html',
@@ -9,6 +9,9 @@ function($scope, $location, AuthService) {
   ]
   var currentPage = 0;
   $scope.subpage = pages[currentPage];
+  $scope.yard = YardService.getYard();
+  console.log('sy:',$scope.yard);
+
 
   $scope.nextStatus = function() {
     currentPage = (currentPage + 1) % pages.length;

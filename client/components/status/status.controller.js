@@ -26,7 +26,7 @@ function($scope, $location, AuthService, WeatherService) {
     longitude: $scope.longitude
   }).then(function(fVal) {
     $scope.forecast = fVal;
-    console.log('f:',fVal);
+    console.log('f:',$scope.forecast);
   }).catch(function(err) {
     console.log('e:',err);
   });
@@ -47,13 +47,13 @@ function($scope, $location, AuthService, WeatherService) {
     $scope.statusDetail = statusDetails[currentStatus];
   };
 
-  var map;
-  $scope.initMap = function() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: $scope.latitude, lng: $scope.longitude},
-      zoom: 8
-    });
-  };
+  // var map;
+  // $scope.initMap = function() {
+  //   map = new google.maps.Map(document.getElementById('map'), {
+  //     center: {lat: $scope.latitude, lng: $scope.longitude},
+  //     zoom: 8
+  //   });
+  // };
 
   $scope.shouldShowDailyWeatherWarning = function() {
     if($scope.forecast.forecast.currently.precipProbability > .25) {
@@ -62,5 +62,13 @@ function($scope, $location, AuthService, WeatherService) {
       return false;
     }
   };
+
+  $scope.shouldShowAlertBox = function() {
+    if($scope.forecast.forecast.alerts) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }]);

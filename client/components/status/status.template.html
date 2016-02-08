@@ -87,6 +87,12 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Whoa!</strong> It looks like there's a {{forecast.forecast.currently.precipProbability}}% chance of {{forecast.forecast.currently.precipType}} today. You might not want to mow!
       </div>
+      <div ng-if="shouldShowAlertBox()" class="alert alert-warning alert-danger" role="alert">
+        <div ng-repeat="alert in forecast.forecast.alerts">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Alert!</strong><br>{{alert.description}}
+        </div>
+      </div>
       <h5><b>Right Now</b></h5>
       <table>
         <tr>
