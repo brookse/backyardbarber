@@ -1,18 +1,8 @@
 angular.module('myApp').controller('scheduleController',
-['$scope', '$location', 'AuthService',
-function($scope, $location, $modal, AuthService) {
-  $scope.message = "schedule message";
+['$scope', '$location', 'AuthService', 'ScheduleService',
+function($scope, $location, AuthService, ScheduleService) {
 
-  $scope.scheduledMowings = [
-    {
-      days: ["Monday", "Wednesday"],
-      time: "1pm"
-    },
-    {
-      days: ["Saturday"],
-      time: "10am"
-    }
-  ];
+  $scope.schedules = ScheduleService.getSchedules();
 
   $scope.editSchedule = function() {
     console.log('editing the schedule');

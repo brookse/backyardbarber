@@ -1,59 +1,56 @@
-<div class="modal-header">
-  <h4 class="modal-title">Add New Schedule</h4>
-</div>
-<div class="modal-body addScheduledMowing">
-  <form role="form" name="addScheduleForm">
-<!--    <div class="row space-below">
-      <div class="col-sm-offset-3" ng-messages="addSensorForm.$error">
-        <div class="errors" ng-message="server">{{error}}</div>
-      </div>
-    </div> -->
-    <div class="row">
+<div ng-controller="addScheduleModalController">
 
-      <div class="form-group col-xs-12">
-        <label for="cust-name">Days</label>
-        <!-- add the day selection -->
-        <span class="input-group-addon">
-          <input type="checkbox" aria-label="Sunday"><label>Sunday</label><br>
-          <input type="checkbox" aria-label="Monday"><label>Monday</label><br>
-          <input type="checkbox" aria-label="Tuesday"><label>Tuesday</label><br>
-          <input type="checkbox" aria-label="Wednesday"><label>Wednesday</label><br>
-          <input type="checkbox" aria-label="Thursday"><label>Thursday</label><br>
-          <input type="checkbox" aria-label="Friday"><label>Friday</label><br>
-          <input type="checkbox" aria-label="Saturday"><label>Saturday</label><br>
-        </span>
-      </div>
+  <div class="modal-header">
+    <h4 class="modal-title">Add New Schedule</h4>
+  </div>
+  <div class="modal-body addScheduledMowing">
+    <form role="form" name="addScheduleForm" ng-controller="addScheduleModalController" ng-submit="ok()">
+      <label><h5>Days</h5></label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Sunday">Sunday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Monday">Monday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Tuesday">Tuesday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Wednesday">Wednesday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Thursday">Thursday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Friday">Friday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Saturday">Saturday
+      </label><br>
 
-      <div class="form-group col-xs-12">
-        <label for="cust-name">Time</label>
-        <!-- add the time selection -->
-    <!--    <div class="container">
-          <div class="row">
-              <div class='col-sm-6'>
-                  <div class="form-group">
-                      <div class='input-group date' id='datetimepicker3'>
-                          <input type='text' class="form-control" />
-                          <span class="input-group-addon">
-                              <span class="glyphicon glyphicon-time"></span>
-                          </span>
-                      </div>
-                  </div>
-              </div>
-              <script type="text/javascript">
-                  $(function () {
-                      $('#datetimepicker3').datetimepicker({
-                          format: 'LT'
-                      });
-                  });
-              </script>
-          </div>
-        </div> -->
+      <label><h5>Time</h5></label>
+      <div class="form-inline">
+        <select ng-model="hour" class="form-control">
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option>
+          <option>10</option><option>11</option><option>12</option>
+        </select> :
+        <select ng-model="minute" class="form-control">
+          <option>00</option><option>15</option><option>30</option>
+          <option>45</option>
+        </select>
+        <select ng-model="ampm" class="form-control">
+          <option>am</option><option>pm</option>
+        </select>
       </div>
-    </div>
-  </form>
-</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="ok()">Add</button>
+      </div>
+    </form>
+  </div>
 
-<div class="modal-footer">
-  <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-  <button type="button" class="btn btn-primary" ng-click="ok()">Add</button>
+
+
 </div>

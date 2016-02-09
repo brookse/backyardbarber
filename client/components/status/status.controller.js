@@ -56,7 +56,7 @@ function($scope, $location, AuthService, WeatherService) {
   // };
 
   $scope.shouldShowDailyWeatherWarning = function() {
-    if($scope.forecast.forecast.currently.precipProbability > .25) {
+    if($scope.forecast.forecast.daily.data[0].precipProbability > .25) {
       return true;
     } else {
       return false;

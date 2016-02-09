@@ -22,6 +22,7 @@ router.get('/', function(req, res) {
 
 /* Create a schedule */
 router.post('/', function(req, res, next) {
+  console.log('rb:',req.body);
   Schedule.create({
     days: req.body.days,
     time: req.body.time
