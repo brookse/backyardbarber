@@ -1,6 +1,6 @@
 <div class="col-md-4">
   <h1>Login to Backyard Barber</h1>
-  <div ng-show="error" class="alert alert-danger"></div>
+  <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
   <form class="form" ng-submit="login()">
     <div class="form-group">
       <label>Serial Number</label>
