@@ -35,6 +35,20 @@
           </td>
         </tr>
       </table>
+      <div ng-if="shouldShowStopButton()">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" ng-click="stopMower()">STOP MOWER</button>
+            </div>
+            <div ng-if="isStopping()" class="container">
+              <div class="col-md-10">
+                <img src="images/{{stopImage}}.gif"/>{{stopStatus}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

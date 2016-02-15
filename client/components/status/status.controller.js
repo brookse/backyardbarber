@@ -1,6 +1,6 @@
 angular.module('myApp').controller('statusController',
-['$scope', '$location', 'AuthService', 'WeatherService',
-function($scope, $location, AuthService, WeatherService) {
+['$scope', '$location', '$timeout', 'AuthService', 'WeatherService',
+function($scope, $location, $timeout, AuthService, WeatherService) {
   var statuses = ["Charging", "Error", "Idle", "Mowing", "Dead", "On Fire"];
   var statusDetails = [
     "The mower is in the charging dock.",
@@ -30,6 +30,8 @@ function($scope, $location, AuthService, WeatherService) {
   }).catch(function(err) {
     console.log('e:',err);
   });
+
+  $scope.stopping = false;
 
   $scope.nextStatus = function() {
     currentStatus = (currentStatus + 1) % statuses.length;
@@ -69,6 +71,42 @@ function($scope, $location, AuthService, WeatherService) {
     } else {
       return false;
     }
-  }
+  };
+
+  $scope.shouldShowStopButton = function() {
+    if(currentStatus == 3) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  $scope.stopping = false;
+  $scope.stopImage = "loading";
+  var stoppingStatuses = [
+    "Stopping blade...",
+    "Stopping movement...",
+    "Shutting down power...",
+    "Mower successfully shut down!"
+  ];
+
+  $scope.stopMower = function() {
+    $scope.stopping = true;
+    $scope.stopStatus = stoppingStatuses[0];
+    $timeout(function(){
+      $scope.stopStatus = stoppingStatuses[1];
+    }, 2000);
+    $timeout(function(){
+      $scope.stopStatus = stoppingStatuses[2];
+    }, 4500);
+    $timeout(function(){
+      $scope.stopStatus = stoppingStatuses[3];
+      $scope.stopImage = "checkmark";
+    }, 7500);
+  };
+
+  $scope.isStopping = function() {
+    return $scope.stopping;
+  };
 
 }]);
