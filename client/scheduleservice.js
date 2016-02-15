@@ -26,7 +26,6 @@ angular.module('myApp').factory('ScheduleService',
     function getSchedules() {
       var deferred = $q.defer();
       this.loadSchedules().then(deferred.resolve).catch(deferred.reject);
-      console.log('sch:',schedules);
       return deferred.promise;
     };
 

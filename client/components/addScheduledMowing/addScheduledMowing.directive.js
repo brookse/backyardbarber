@@ -23,7 +23,6 @@ function($scope, $location, ScheduleService) {
         selectedDays.push(day);
       }
     }
-    console.log('sd:',selectedDays);
     ScheduleService.saveSchedule({
       days: $scope.days,
       time: $scope.hour +":"+ $scope.minute +" "+$scope.ampm
