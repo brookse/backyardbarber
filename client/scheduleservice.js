@@ -14,26 +14,20 @@ angular.module('myApp').factory('ScheduleService',
       var deferred = $q.defer();
       $http.get('/schedules')
         .success(function(data, status) {
-          if(status == 200 && data.status) {
-        //    console.log('load obstacles: ',data)
-            schedules = data.schedules;
-            deferred.resolve();
-          } else {
-            schedules = false;
-            deferred.reject();
-          }
+          schedules = data.schedules;
+          deferred.resolve(data);
         }).error(function(data) {
-          schedules = false;
-          deferred.reject();
+          deferred.reject(data);
         });
 
         return deferred.promise;
     };
 
     function getSchedules() {
-      this.loadSchedules();
+      var deferred = $q.defer();
+      this.loadSchedules().then(deferred.resolve).catch(deferred.reject);
       console.log('sch:',schedules);
-      return schedules;
+      return deferred.promise;
     };
 
     function saveSchedule(schedule) {

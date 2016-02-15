@@ -15,29 +15,21 @@ angular.module('myApp').factory('YardService',
 
     function loadObstacles() {
       var deferred = $q.defer();
-
       $http.get('/obstacles')
         .success(function(data, status) {
-          if(status == 200 && data.status) {
-        //    console.log('load obstacles: ',data)
-            obstacles = data.obstacles;
-            deferred.resolve();
-          } else {
-            obstacles = false;
-            deferred.reject();
-          }
+          obstacles = data.obstacles;
+          deferred.resolve(data);
         }).error(function(data) {
-          obstacles = false;
-          deferred.reject();
+          deferred.reject(data);
         });
 
         return deferred.promise;
     };
 
     function getObstacles() {
-      this.loadObstacles();
-      console.log('o:',obstacles);
-      return obstacles;
+      var deferred = $q.defer();
+      this.loadObstacles().then(deferred.resolve).catch(deferred.reject);
+      return deferred.promise;
     };
 
     function saveObstacle(obstacleData) {
