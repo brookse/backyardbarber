@@ -103,6 +103,11 @@ function($scope, $location, $timeout, AuthService, WeatherService) {
       $scope.stopStatus = stoppingStatuses[3];
       $scope.stopImage = "checkmark";
     }, 7500);
+    $timeout(function(){
+      currentStatus = 2;
+      $scope.status = statuses[currentStatus];
+      $scope.statusDetail = statusDetails[currentStatus];
+    }, 9500);
   };
 
   $scope.isStopping = function() {
