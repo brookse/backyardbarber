@@ -1,12 +1,19 @@
 <div class="yardmapTemplate" ng-controller="yardmapController">
   <h3>Yard Map</h3>
-  <br>
-  <button type="button" class="btn btn-default" ng-click="previousStatus()" aria-label="Previous Status">
-    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-  </button>
-  <button type="button" class="btn btn-default" ng-click="nextStatus()" aria-label="Next Status">
-    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-  </button>
-  <br>
+  <ul class="nab nav-pills nav-justified">
+    <li>
+      <button type="button" class="btn btn-default" ng-click="subpage='components/createYard/createYard.template.html'">Create Yard</button>
+    </li>
+    <li>
+      <button type="button" class="btn btn-default" ng-click="subpage='components/obstacleDrawer/obstacleDrawer.template.html'">Obstacle Drawer</button>
+    </li>
+    <li>
+      <button type="button" class="btn btn-default" ng-click="subpage='components/createObstacle/createObstacle.template.html'">Create Obstacle</button>
+    </li>
+    <li>
+      <button type="button" class="btn btn-default" ng-click="subpage='components/interactiveYardMap/interactiveYardMap.template.html'">Interactive Map</button>
+    </li>
+  </ul>
+  <br><br>
   <ng-include src="subpage"></ng-include>
 </div>
