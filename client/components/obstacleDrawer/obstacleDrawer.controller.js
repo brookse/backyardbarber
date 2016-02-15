@@ -14,8 +14,8 @@ function($scope, $location, AuthService, YardService) {
     console.log('$sco:',$scope.obstacles);
   };
 
-  $scope.placeInYard = function() {
-    console.log('obstacle to place: ');
+  $scope.placeInYard = function(obstacle) {
+    console.log('obstacle to place: ',obstacle.name);
   };
 
 }]);

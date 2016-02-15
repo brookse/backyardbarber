@@ -1,51 +1,27 @@
 <div class="obstacleDrawerTemplate" ng-controller="obstacleDrawerController">
   <div class="panel panel-default" style="width:50%">
     <div class="panel-heading">
-      <h4>Obstacles <button type="button" class="btn btn-default" ng-click="createObstacle()" aria-label="Previous Status"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></h4>
+      <h4>Obstacles <button type="button" class="btn btn-default pull-right" ng-click="createObstacle()" aria-label="Previous Status"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></h4>
     </div>
     <div class="panel-body">
-      <table>
-        <tr ng-repeat="obstacle in obstacles">
-          <td>
-            <table>
-              <tr>
-                <td>
-                  <h5>{{ obstacle.name }}</h5>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-default pull-right" ng-click="placeInYard()" aria-label="Place in Yard"><span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span></button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <i>{{ obstacle.description }}</i>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  {{ obstacle.length }} x {{ obstacle.width }}
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-          <!--  <td>
-              <button type="button" class="btn btn-default pull-right" ng-click="placeInYard()" aria-label="Place in Yard">
-                <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <i>{{ obstacle.description }}</i>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              {{ obstacle.length }} x {{ obstacle.width }}
-            </td>
-          </tr> -->
-      </table>
+      <div class="container">
+        <div ng-repeat="obstacle in obstacles">
+          <div class="row">
+            <div class="col-md-3">
+              <h4>{{ obstacle.name }}</h4>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-default pull-right" ng-click="placeInYard(obstacle)" aria-label="Place in Yard"><span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span></button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <i>{{ obstacle.description }}</i><br>
+              {{ obstacle.length }} in. x {{ obstacle.width }} in.<br><br>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 <!--    <div class="panel-heading">
       <h4>Endpoints</h4>
