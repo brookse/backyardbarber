@@ -26,7 +26,7 @@
     <div class="panel-body">
       <table>
         <tr>
-          <td>
+          <td style="padding-right:15px">
             <img src="images/{{status}}.png"/>
           </td>
           <td>
@@ -43,7 +43,7 @@
             </div>
             <div ng-if="isStopping()" class="container">
               <div class="col-md-10">
-                <img src="images/{{stopImage}}.gif"/>{{stopStatus}}
+                <img style="padding-right:15px" src="images/{{stopImage}}.gif"/>{{stopStatus}}
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@
       <h5><b>Right Now</b></h5>
       <table>
         <tr>
-          <td>
+          <td style="padding-right:15px">
             <img src="images/weather/{{forecast.forecast.currently.icon}}.png"/>
           </td>
           <td>
@@ -123,14 +123,14 @@
         </tr>
       </table>
       <h5><b>7 Day Outlook</b></h5>
-      <table>
+      <table table-layout="fixed">
         <tr>
-          <td ng-repeat="day in forecast.forecast.daily.data">
+          <td style="width:12.5%" ng-repeat="day in forecast.forecast.daily.data" align="center">
             <img src="images/weather/{{day.icon}}.png"/><br>
           </td>
         </tr>
         <tr>
-          <td ng-repeat="day in forecast.forecast.daily.data">
+          <td style="vertical-align:top; padding:5px; width:12.5%" ng-repeat="day in forecast.forecast.daily.data" align="center">
             {{day.summary}}
           </td>
         </tr>
