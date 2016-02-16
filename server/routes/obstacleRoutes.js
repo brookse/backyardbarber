@@ -4,8 +4,8 @@ var express = require('express'),
     Obstacle = require('../models/obstacle.js');
 
 /* Get all obstacles */
-router.get('/', function(req, res) {
-  Obstacle.find({}, function(error, obstacles) {
+router.get('/:id', function(req, res) {
+  Obstacle.find({mowerSN: req.params.id}, function(error, obstacles) {
     if(error) {
       console.log('error:',error);
       return res.status(500).json({
@@ -27,7 +27,8 @@ router.post('/', function(req, res, next) {
     description: req.body.description,
     length: req.body.length,
     width: req.body.width,
-    units: "inches"
+    units: "inches",
+    mowerSN: req.body.mowerSN
   }, function(error, obstacle) {
     if(error) {
       console.log('error:',error);

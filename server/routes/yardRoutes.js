@@ -4,8 +4,8 @@ var express = require('express'),
     Yard = require('../models/yard.js');
 
 /* Get all yards */
-router.get('/', function(req, res) {
-  Yard.find({}, function(error, yards) {
+router.get('/:id', function(req, res) {
+  Yard.find({mowerSN: req.params.id}, function(error, yards) {
     if(error) {
       console.log('error:',error);
       return res.status(500).json({
@@ -22,12 +22,12 @@ router.get('/', function(req, res) {
 
 /* Create a yard */
 router.post('/', function(req, res, next) {
-  console.log('r:',req.body)
   Yard.create({
     length: req.body.yardData.length,
     width: req.body.yardData.width,
     units: req.body.yardData.units,
-    obstacles: req.body.yardData.obstacles
+    obstacles: req.body.yardData.obstacles,
+    mowerSN: req.body.yardData.mowerSN
   }, function(error, yard) {
     if(error) {
       console.log('error:',error);
