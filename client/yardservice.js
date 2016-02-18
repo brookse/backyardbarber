@@ -1,6 +1,6 @@
 angular.module('myApp').factory('YardService',
-  ['$q', '$timeout', '$http',
-  function($q, $timeout, $http) {
+  ['$q', '$timeout', '$http', 'AuthService',
+  function($q, $timeout, $http, AuthService) {
     var obstacles = null;
     var yard = null;
     return({
@@ -15,7 +15,7 @@ angular.module('myApp').factory('YardService',
 
     function loadObstacles() {
       var deferred = $q.defer();
-      $http.get('/obstacles')
+      $http.get('/obstacles/'+AuthService.getUserStatus().username)
         .success(function(data, status) {
           obstacles = data.obstacles;
           deferred.resolve(data);
@@ -34,14 +34,12 @@ angular.module('myApp').factory('YardService',
 
     function saveObstacle(obstacleData) {
       var deferred = $q.defer();
-      console.log('obsd:',obstacleData)
+      var mowerSN = AuthService.getUserStatus().username;
+      obstacleData.mowerSN = mowerSN;
       $http.post('/obstacles', obstacleData)
         .success(function(data, status) {
           if(status == 200) {
-            console.log('save obstacle: ',data)
-            console.log('obs before:',obstacles);
             obstacles.push(data.obstacle);
-            console.log('obs after:',obstacles);
             deferred.resolve();
           } else {
             deferred.reject();
@@ -55,7 +53,6 @@ angular.module('myApp').factory('YardService',
 
     function deleteObstacle(obstacleData) {
       var deferred = $q.defer();
-      console.log('obsd:',obstacleData)
       $http.delete('/obstacles', obstacleData)
         .success(function(data, status) {
           if(status == 200) {
@@ -74,10 +71,9 @@ angular.module('myApp').factory('YardService',
     function loadYard() {
       var deferred = $q.defer();
 
-      $http.get('/yard')
+      $http.get('/yard/'+AuthService.getUserStatus().username)
         .success(function(data, status) {
           if(status == 200 && data.status) {
-            console.log('load yard: ',data)
             yard = data.yard;
             deferred.resolve();
           } else {
@@ -99,11 +95,11 @@ angular.module('myApp').factory('YardService',
 
     function saveYard(yardData) {
       var deferred = $q.defer();
-
+      var mowerSN = AuthService.getUserStatus().username;
+      yardData.mowerSN = mowerSN;
       $http.post('/yard', {yardData})
         .success(function(data, status) {
           if(status == 200 && data.status) {
-            console.log('save yard: ',data)
             yard = data.yard;
             deferred.resolve();
           } else {

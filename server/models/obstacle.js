@@ -7,7 +7,8 @@ var Obstacle = new Schema({
   description: String,
   length: Number,
   width: Number,
-  units: String
+  units: String,
+  mowerSN: String
 });
 
 module.exports = mongoose.model('obstacles', Obstacle);

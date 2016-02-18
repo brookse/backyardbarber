@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 
 var Schedule = new Schema({
   days: [],
-  time: String
+  time: String,
+  mowerSN: String
 });
 
 module.exports = mongoose.model('schedules', Schedule);

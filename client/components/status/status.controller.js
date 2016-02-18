@@ -107,6 +107,7 @@ function($scope, $location, $timeout, AuthService, WeatherService) {
       currentStatus = 2;
       $scope.status = statuses[currentStatus];
       $scope.statusDetail = statusDetails[currentStatus];
+      $scope.stopImage = "loading";
     }, 9500);
   };
 
