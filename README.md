@@ -8,7 +8,20 @@ npm install
 bower install
 ```
 To run:
-Open database: `mongod`
+Open database: `mongod`<br>
+If you get an error with mongo only allowing one instance of each type, open mongo shell and drop indexes on everything except user table. eg:<br>
+```
+> db
+database-name
+> use database-name
+switched to db database-name
+> db.getCollectionNames()
+[ "obstacles", "schedules", "users", "yards" ]
+> db.obstacles.dropIndexes()
+> db.schedules.dropIndexes()
+> db.yards.dropIndexes()
+```
+Finally:
 ```
 npm start
 ```

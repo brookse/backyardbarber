@@ -45,12 +45,12 @@ angular.module('myApp').factory('ScheduleService',
       return deferred.promise;
     };
 
-    function deleteSchedule(schedule) {
+    function deleteSchedule(sched) {
       var deferred = $q.defer();
-      $http.delete('/schedules', schedule)
+      $http.delete('/schedules/'+sched.sched._id)
         .success(function(data, status) {
           if(status == 200) {
-            schedules.pop(schedule);
+            schedules = data.schedules;
             deferred.resolve();
           } else {
             deferred.reject();
