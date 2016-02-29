@@ -5,6 +5,9 @@
       <h4>Current Schedules</h4>
     </div>
     <div class="panel-body">
+      <div ng-if="noSchedulesFound()">
+        No schedules have been found. Create one now!
+      </div>
       <div ng-repeat="schedule in schedules">
         <li class="list-group-item">
           <button type="button" class="btn btn-default pull-right" ng-click="editSchedule(schedule)" aria-label="Edit Schedule">

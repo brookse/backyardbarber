@@ -47,4 +47,12 @@ function($scope, $location, AuthService, ScheduleService) {
         });
     })
   };
+
+  $scope.noSchedulesFound = function() {
+    if($scope.schedules && $scope.schedules.length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }]);
