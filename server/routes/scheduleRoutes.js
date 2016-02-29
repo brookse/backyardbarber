@@ -4,8 +4,8 @@ var express = require('express'),
     Schedule = require('../models/schedule.js');
 
 /* Get all schedules */
-router.get('/', function(req, res) {
-  Schedule.find({}, function(error, schedules) {
+router.get('/:id', function(req, res) {
+  Schedule.find({mowerSN: req.params.id}, function(error, schedules) {
     if(error) {
       console.log('error:',error);
       return res.status(500).json({
@@ -25,7 +25,8 @@ router.post('/', function(req, res, next) {
   console.log('rb:',req.body);
   Schedule.create({
     days: req.body.days,
-    time: req.body.time
+    time: req.body.time,
+    mowerSN: req.body.mowerSN
   }, function(error, schedule) {
     if(error) {
       console.log('error:',error);

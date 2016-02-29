@@ -1,6 +1,6 @@
 angular.module('myApp').factory('ScheduleService',
-  ['$q', '$timeout', '$http',
-  function($q, $timeout, $http) {
+  ['$q', '$timeout', '$http', 'AuthService',
+  function($q, $timeout, $http, AuthService) {
     var schedules = null;
 
     return({
@@ -12,7 +12,7 @@ angular.module('myApp').factory('ScheduleService',
 
     function loadSchedules() {
       var deferred = $q.defer();
-      $http.get('/schedules')
+      $http.get('/schedules/'+AuthService.getUserStatus().username)
         .success(function(data, status) {
           schedules = data.schedules;
           deferred.resolve(data);
@@ -31,6 +31,8 @@ angular.module('myApp').factory('ScheduleService',
 
     function saveSchedule(schedule) {
       var deferred = $q.defer();
+      var mowerSN = AuthService.getUserStatus().username;
+      schedule.mowerSN = mowerSN;
       $http.post('/schedules', schedule)
         .success(function(data, status) {
           if(status == 200) {
