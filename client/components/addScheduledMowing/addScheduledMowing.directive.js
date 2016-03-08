@@ -1,6 +1,6 @@
 angular.module('myApp').controller('addScheduleModalController',
-['$scope', '$location', 'ScheduleService',
-function($scope, $location, ScheduleService) {
+['$scope', '$location', '$timeout', 'ScheduleService',
+function($scope, $location, $timeout, ScheduleService) {
   $scope.schedule = {};
   $scope.days = {
     Sunday: false,
@@ -13,10 +13,6 @@ function($scope, $location, ScheduleService) {
   };
 
   $scope.ok = function () {
-    console.log("new one:",{
-      days: $scope.days,
-      time: $scope.hour +":"+ $scope.minute +" "+$scope.ampm
-    });
     selectedDays = [];
     for(day in $scope.days) {
       if(day == true) {
@@ -28,6 +24,7 @@ function($scope, $location, ScheduleService) {
       time: $scope.hour +":"+ $scope.minute +" "+$scope.ampm
     });
     $scope.addScheduleForm = {};
+    // briefly show confirmation dialogue
   };
 
   $scope.cancel = function () {

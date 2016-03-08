@@ -49,6 +49,20 @@
           </div>
         </div>
       </div>
+      <div ng-if="shouldShowBeginButton()">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" ng-click="beginMower()">BEGIN MOWER</button>
+            </div>
+            <div ng-if="isBeginning()" class="container">
+              <div class="col-md-10">
+                <img style="padding-right:15px" src="images/{{beginImage}}.gif"/>{{beginStatus}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

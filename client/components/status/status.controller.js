@@ -81,6 +81,15 @@ function($scope, $location, $timeout, AuthService, WeatherService) {
     }
   };
 
+  $scope.shouldShowBeginButton = function() {
+    if(currentStatus == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /* Begin emergency stopping */
   $scope.stopping = false;
   $scope.stopImage = "loading";
   var stoppingStatuses = [
@@ -113,6 +122,41 @@ function($scope, $location, $timeout, AuthService, WeatherService) {
 
   $scope.isStopping = function() {
     return $scope.stopping;
+  };
+
+  /* Begin start of mower */
+  $scope.beginning = false;
+  $scope.beginImage = "loading";
+  var beginningStatuses = [
+    "Starting up...",
+    "Calculating path...",
+    "Movement and blade beginning...",
+    "Mowing has begun!"
+  ];
+
+  $scope.beginMower = function() {
+    $scope.beginning = true;
+    $scope.beginStatus = beginningStatuses[0];
+    $timeout(function(){
+      $scope.beginStatus = beginningStatuses[1];
+    }, 1500);
+    $timeout(function(){
+      $scope.beginStatus = beginningStatuses[2];
+    }, 3500);
+    $timeout(function(){
+      $scope.beginStatus = beginningStatuses[3];
+      $scope.beginImage = "checkmark";
+    }, 5500);
+    $timeout(function(){
+      currentStatus = 3;
+      $scope.status = statuses[currentStatus];
+      $scope.statusDetail = statusDetails[currentStatus];
+      $scope.beginImage = "loading";
+    }, 9000);
+  };
+
+  $scope.isBeginning = function() {
+    return $scope.beginning;
   };
 
 }]);
