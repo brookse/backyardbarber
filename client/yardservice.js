@@ -53,10 +53,11 @@ angular.module('myApp').factory('YardService',
 
     function deleteObstacle(obstacleData) {
       var deferred = $q.defer();
-      $http.delete('/obstacles', obstacleData)
+      console.log('obstacleeeee:',obstacleData);
+      $http.delete('/obstacles/'+obstacleData.obst._id)
         .success(function(data, status) {
           if(status == 200) {
-            obstacles.pop(obstacleData);
+            obstacles = data.obstacles;
             deferred.resolve();
           } else {
             deferred.reject();

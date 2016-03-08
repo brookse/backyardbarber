@@ -5,13 +5,21 @@
     </div>
     <div class="panel-body">
       <div class="container">
+        <div ng-if="noObstaclesFound()">
+          No obstacles have been found. Create one now!
+        </div>
         <div ng-repeat="obstacle in obstacles">
           <div class="row">
             <div class="col-md-3">
               <h4>{{ obstacle.name }}</h4>
             </div>
             <div class="col-md-2">
-              <button type="button" class="btn btn-default pull-right" ng-click="placeInYard(obstacle)" aria-label="Place in Yard"><span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span></button>
+              <button type="button" class="btn btn-default pull-right" ng-click="placeInYard(obstacle)" aria-label="Place in Yard">
+                <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-default pull-right" ng-click="deleteObstacle(obstacle)" aria-label="Delete Obstacle">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </button>
             </div>
           </div>
           <div class="row">

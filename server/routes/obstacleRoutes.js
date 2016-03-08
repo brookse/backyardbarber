@@ -48,18 +48,24 @@ router.post('/', function(req, res, next) {
 
 /* Delete an obstacle */
 router.delete('/:id', function(req, res) {
-  Obstacle.remove(req.params.id, function(error, obstacle) {
+  Obstacle.remove({_id: req.params.id}, function(error) {
     if(error) {
-      console.log('error: ',error);
       return res.status(500).json({
         err: error,
-        detail: "error deleting obstacle",
-        obstacle: obstacle
+        detail: "error deleting obstacle"
       })
     }
-    console.log('obstacle deleted!');
-    return res.status(200).json({
-      status: 'obstacle deleted!'
+    Obstacle.find({}, function(error, obstacles) {
+      if(error) {
+        return res.status(500).json({
+          err: error,
+          detail: "error fetching all obstacles"
+        });
+      }
+      return res.status(200).json({
+        status: 'obstacles found!',
+        obstacles: obstacles
+      });
     });
   });
 });
