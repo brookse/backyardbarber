@@ -113,7 +113,7 @@
     <div class="panel-body">
       <div ng-if="shouldShowDailyWeatherWarning()" class="alert alert-warning alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Whoa!</strong> It looks like there's a {{forecast.forecast.daily.data[0].precipProbability*100}}% chance of {{forecast.forecast.currently.precipType}} today. You might not want to mow!
+        <strong>Whoa!</strong> It looks like there's a {{forecast.forecast.daily.data[0].precipProbability*100}}% chance of {{forecast.forecast.currently.precipType}} today. <a href="" class="alert-link">Cancel your mowing now!</a>
       </div>
       <div ng-if="shouldShowAlertBox()" class="alert alert-warning alert-danger" role="alert">
         <div ng-repeat="alert in forecast.forecast.alerts">
@@ -138,6 +138,11 @@
       </table>
       <h5><b>7 Day Outlook</b></h5>
       <table table-layout="fixed">
+        <tr>
+          <td ng-repeat="day in forecast.forecast.daily.data" align="center">
+            <b>{{day.time}}</b>
+          </td>
+        </tr>
         <tr>
           <td style="width:12.5%" ng-repeat="day in forecast.forecast.daily.data" align="center">
             <img src="images/weather/{{day.icon}}.png"/><br>

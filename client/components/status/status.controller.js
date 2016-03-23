@@ -16,15 +16,27 @@ function($scope, $location, $timeout, AuthService, WeatherService) {
   $scope.nickname = AuthService.getUserStatus().nickname;
   $scope.status = statuses[currentStatus];
   $scope.statusDetail = statusDetails[currentStatus];
-  $scope.longitude = "-87.9090520";
-  $scope.latitude = "43.0441100";
-  $scope.elevation = "183.57 m";
-  $scope.batterylevel = "25%";
+  $scope.longitude = AuthService.getUserStatus().longitude;
+  $scope.latitude = AuthService.getUserStatus().latitude;
+  $scope.elevation = AuthService.getUserStatus().elevation + " m";
+  $scope.batterylevel = AuthService.getUserStatus().batteryLevel + "%";
 
   WeatherService.getCurrentWeather({
     latitude: $scope.latitude,
     longitude: $scope.longitude
   }).then(function(fVal) {
+    for( day in fVal.forecast.daily.data ) {
+      if(day == 0) {
+        fVal.forecast.daily.data[day].time = "Today";
+      } else if(day == 1) {
+        fVal.forecast.daily.data[day].time = "Tomorrow";
+      } else {
+        var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var a = new Date(fVal.forecast.daily.data[day].time*1000);
+        var stringDate = weekdays[a.getDay()];
+        fVal.forecast.daily.data[day].time = stringDate;
+      }
+    }
     $scope.forecast = fVal;
     console.log('f:',$scope.forecast);
   }).catch(function(err) {
