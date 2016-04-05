@@ -71,27 +71,21 @@ angular.module('myApp').factory('YardService',
 
     function loadYard() {
       var deferred = $q.defer();
-
       $http.get('/yard/'+AuthService.getUserStatus().username)
         .success(function(data, status) {
-          if(status == 200 && data.status) {
-            yard = data.yard;
-            deferred.resolve();
-          } else {
-            yard = false;
-            deferred.reject();
-          }
+          yard = data.yard;
+          deferred.resolve(data);
         }).error(function(data) {
-          yard = false;
-          deferred.reject();
+          deferred.reject(data);
         });
 
         return deferred.promise;
     };
 
     function getYard() {
-      this.loadYard();
-      return yard;
+      var deferred = $q.defer();
+      this.loadYard().then(deferred.resolve).catch(deferred.reject);
+      return deferred.promise;
     };
 
     function saveYard(yardData) {

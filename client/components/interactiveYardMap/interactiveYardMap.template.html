@@ -1,10 +1,47 @@
+<head>
+  <style>
+    td {
+      height: 20px;
+      width: 20px;
+      border: 1px solid black;
+    }
+
+    td:hover {
+      background-color: #E03D40;
+    }
+  </style>
+</head>
 <div class="interactiveYardMapTemplate" ng-controller="interactiveYardMapController">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4>Interactive Yard Map</h4>
     </div>
     <div class="panel-body">
-      IM
+      Length: {{ yard.dimensions.length }} {{ yard.dimensions.units }}<br>
+      Width: {{ yard.dimensions.width }} {{ yard.dimensions.units }}<br><br>
+
+      <table>
+        <tr>
+          <td class="instruction" style="background-color:#8a0000">
+            Edge
+          </td>
+          <td class="instruction" style="background-color:#1bbeca">
+            Obstacle
+          </td>
+          <td class="instruction" style="background-color:#e5e5e5">
+            Normal
+          </td>
+        </tr>
+      </table><br><br>
+
+      <table>
+        <tr ng-repeat="row in yard.map">
+          <td class="imap" ng-repeat="cell in row" ng-style="{'background-color':cell.color}" ng-click="cellClicked(cell)">
+
+          </td>
+        </tr>
+      </table>
+
     </div>
   </div>
 </div>
