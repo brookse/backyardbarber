@@ -10,7 +10,8 @@ angular.module('myApp').factory('YardService',
       loadYard: loadYard,
       saveObstacle: saveObstacle,
       saveYard: saveYard,
-      deleteObstacle: deleteObstacle
+      deleteObstacle: deleteObstacle,
+      saveYardUpdates: saveYardUpdates
     });
 
     function loadObstacles() {
@@ -93,6 +94,25 @@ angular.module('myApp').factory('YardService',
       var mowerSN = AuthService.getUserStatus().username;
       yardData.mowerSN = mowerSN;
       $http.post('/yard', {yardData})
+        .success(function(data, status) {
+          if(status == 200 && data.status) {
+            yard = data.yard;
+            deferred.resolve();
+          } else {
+            deferred.reject();
+          }
+        }).error(function(data) {
+          deferred.reject();
+        });
+
+        return deferred.promise;
+    };
+
+    function saveYardUpdates(yardData) {
+      var deferred = $q.defer();
+      var mowerSN = AuthService.getUserStatus().username;
+      yardData.mowerSN = mowerSN;
+      $http.put('/yard', {yardData: yardData})
         .success(function(data, status) {
           if(status == 200 && data.status) {
             yard = data.yard;

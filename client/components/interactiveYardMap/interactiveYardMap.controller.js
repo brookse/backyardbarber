@@ -21,7 +21,7 @@ function($scope, $location, AuthService, YardService) {
       }
 
       // create the map data structure if yard is blank
-  //    if($scope.yard.obstacles = null) {
+      if($scope.yard.map == null || typeof $scope.yard.map == 'undefined' || $scope.yard.map.length <= 0) {
         $scope.yard.map = [];
         for(var w=0; w<$scope.yard.dimensions.width; w++) {
           row = [];
@@ -48,7 +48,7 @@ function($scope, $location, AuthService, YardService) {
           }
           $scope.yard.map[w] = row;
         }
-  //    }
+      }
 
     }).catch(function(err) {
       console.log('e:', err);
@@ -56,11 +56,17 @@ function($scope, $location, AuthService, YardService) {
 
     $scope.cellClicked = function(cell) {
       console.log('cell clicked:',cell);
-      if(cell.color == "#1bbeca") {
+      if(cell.color == "#1bbeca") {   // deselecting an obstacle
+        cell.blocked = false;
         cell.color = cell.originalColor;
-      } else {
+      } else {    // selecting an obstacle
         cell.color = "#1bbeca";
+        cell.blocked = true;
       }
     };
+
+    $scope.saveMap = function() {
+      YardService.saveYardUpdates($scope.yard);
+    }
 
 }]);

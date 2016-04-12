@@ -26,7 +26,7 @@ router.post('/', function(req, res, next) {
     length: req.body.yardData.length,
     width: req.body.yardData.width,
     units: req.body.yardData.units,
-    obstacles: req.body.yardData.obstacles,
+    map: req.body.yardData.map,
     mowerSN: req.body.yardData.mowerSN
   }, function(error, yard) {
     if(error) {
@@ -44,6 +44,29 @@ router.post('/', function(req, res, next) {
     });
   });
 });
+
+router.put('/', function(req, res) {
+  Yard.findOneAndUpdate({
+    mowerSN: req.body.yardData.mowerSN  // conditions
+  }, {
+    map: req.body.yardData.map   // update
+  },
+  {new: true},  // options
+  function(error, yard) {   // callback
+    if(error) {
+      console.log('error: ',error);
+      return res.status(500).json({
+        err: error,
+        detail: "error updating yard",
+        yard: yard
+      })
+    }
+    console.log('yard updated!');
+    return res.status(200).json({
+      status: 'yard updated!'
+    });
+  })
+})
 
 /* Delete a yard */
 router.delete('/:id', function(req, res) {
