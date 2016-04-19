@@ -7,11 +7,25 @@ function($scope, $location, AuthService, YardService) {
     'components/createObstacle/createObstacle.template.html',
     'components/interactiveYardMap/interactiveYardMap.template.html'
   ]
-  var currentPage = 0;
-  $scope.subpage = pages[currentPage];
-  $scope.yard = YardService.getYard();
-  console.log('sy:',$scope.yard);
+  var currentPage;
 
+  YardService.getYard()
+  .then(function(yard) {
+    $scope.yard = yard.yards[0];
+
+    if($scope.yard && $scope.yard.length > 0) {
+      currentPage = 3;
+      $scope.subpage = pages[currentPage];
+    } else {
+      currentPage = 0;
+      $scope.subpage = pages[currentPage];
+    }
+
+  }).catch(function(err) {
+    console.log('e:',err);
+  });
+
+  $scope.subpage = pages[currentPage];
 
   $scope.nextStatus = function() {
     currentPage = (currentPage + 1) % pages.length;
