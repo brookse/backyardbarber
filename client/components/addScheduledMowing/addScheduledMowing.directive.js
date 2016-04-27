@@ -1,20 +1,33 @@
-app.controller('addScheduleModalController',
-function($scope, $modalInstance, Sensor, propertyId, ErrorService) {
+angular.module('myApp').controller('addScheduleModalController',
+['$scope', '$location', '$timeout', 'ScheduleService',
+function($scope, $location, $timeout, ScheduleService) {
   $scope.schedule = {};
-  // $scope.addSensorForm.$error.server = false;
+  $scope.days = {
+    Sunday: false,
+    Monday: false,
+    Tuesday: false,
+    Wednesday: false,
+    Thursday: false,
+    Friday: false,
+    Saturday: false
+  };
 
   $scope.ok = function () {
-    var schedule = new Sensor($scope.schedule);
-
-    schedule.create().then(function(results) {
-      $modalInstance.close(results);
-    }).catch(function(results) {
-      $scope.addScheduleForm.$error.server = true;
-      $scope.error = ErrorService.parse(results);
+    selectedDays = [];
+    for(day in $scope.days) {
+      if(day == true) {
+        selectedDays.push(day);
+      }
+    }
+    ScheduleService.saveSchedule({
+      days: $scope.days,
+      time: $scope.hour +":"+ $scope.minute +" "+$scope.ampm
     });
+    $scope.addScheduleForm = {};
+    // briefly show confirmation dialogue
   };
 
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
-});
+}]);

@@ -68,5 +68,7 @@ function($scope, $location, AuthService) {
 
   var user = AuthService.getUserStatus();
   $scope.username = user.username;
+  $scope.nickname = user.nickname;
+  $scope.subpage='components/status/status.template.html';
 
 }]);

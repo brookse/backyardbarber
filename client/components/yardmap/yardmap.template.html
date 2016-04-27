@@ -1,7 +1,19 @@
 <div class="yardmapTemplate" ng-controller="yardmapController">
   <h3>Yard Map</h3>
-  <div>This is the yard map</div>
-  <p>
-    {{ message }}
-  </p>
+  <ul class="nab nav-pills nav-justified">
+    <li>
+      <button type="button" class="btn btn-default" ng-click="subpage='components/createYard/createYard.template.html'">Create Yard</button>
+    </li>
+    <li>
+      <button type="button" class="btn btn-default" ng-click="subpage='components/obstacleDrawer/obstacleDrawer.template.html'">Obstacle Drawer</button>
+    </li>
+    <li>
+      <button type="button" class="btn btn-default" ng-click="subpage='components/createObstacle/createObstacle.template.html'">Create Obstacle</button>
+    </li>
+    <li>
+      <button type="button" class="btn btn-default" ng-click="subpage='components/interactiveYardMap/interactiveYardMap.template.html'">Interactive Map</button>
+    </li>
+  </ul>
+  <br><br>
+  <ng-include src="subpage"></ng-include>
 </div>

@@ -26,7 +26,7 @@
     <div class="panel-body">
       <table>
         <tr>
-          <td>
+          <td style="padding-right:15px">
             <img src="images/{{status}}.png"/>
           </td>
           <td>
@@ -35,6 +35,34 @@
           </td>
         </tr>
       </table>
+      <div ng-if="shouldShowStopButton()">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" ng-click="stopMower()">STOP MOWER</button>
+            </div>
+            <div ng-if="isStopping()" class="container">
+              <div class="col-md-10">
+                <img style="padding-right:15px" src="images/{{stopImage}}.gif"/>{{stopStatus}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="shouldShowBeginButton()">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" ng-click="beginMower()">BEGIN MOWER</button>
+            </div>
+            <div ng-if="isBeginning()" class="container">
+              <div class="col-md-10">
+                <img style="padding-right:15px" src="images/{{beginImage}}.gif"/>{{beginStatus}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -62,16 +90,70 @@
       <div>{{latitude}}</div>
       <h5><b>Elevation</b></h5>
       <div>{{elevation}}</div>
-      <div id="map"></div>
+  <!--    <div id="map"></div>
       <script type="text/javascript">
         var map;
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 8
+            center: {lat: 43.0441100, lng: -87.9090520},
+            zoom: 17
           });
         }
-    </script>
+      </script>
+      <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiPCo1TtkWhOs5gCKuFfpbAwcnM1-zYnE&callback=initMap">
+      </script> -->
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>Weather</h4>
+    </div>
+    <div class="panel-body">
+      <div ng-if="shouldShowDailyWeatherWarning()" class="alert alert-warning alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Whoa!</strong> It looks like there's a {{forecast.forecast.daily.data[0].precipProbability*100}}% chance of {{forecast.forecast.currently.precipType}} today. <a href="" class="alert-link">Cancel your mowing now!</a>
+      </div>
+      <div ng-if="shouldShowAlertBox()" class="alert alert-warning alert-danger" role="alert">
+        <div ng-repeat="alert in forecast.forecast.alerts">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Alert!</strong><br>{{alert.description}}
+        </div>
+      </div>
+      <h5><b>Right Now</b></h5>
+      <table>
+        <tr>
+          <td style="padding-right:15px">
+            <img src="images/weather/{{forecast.forecast.currently.icon}}.png"/>
+          </td>
+          <td>
+            <b>{{ forecast.forecast.currently.summary}}</b><br>
+            Temperature: {{ forecast.forecast.currently.temperature }} &deg; F<br>
+            Dew Point: {{ forecast.forecast.currently.dewPoint }}	&deg; F<br>
+            Wind Speed: {{ forecast.forecast.currently.windSpeed }} mph<br>
+            Chance of Precipitation: {{ forecast.forecast.currently.precipProbability*100 }}%<br><br>
+          </td>
+        </tr>
+      </table>
+      <h5><b>7 Day Outlook</b></h5>
+      <table table-layout="fixed">
+        <tr>
+          <td ng-repeat="day in forecast.forecast.daily.data" align="center">
+            <b>{{day.time}}</b>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:12.5%" ng-repeat="day in forecast.forecast.daily.data" align="center">
+            <img src="images/weather/{{day.icon}}.png"/><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top; padding:5px; width:12.5%" ng-repeat="day in forecast.forecast.daily.data" align="center">
+            {{day.summary}}
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 

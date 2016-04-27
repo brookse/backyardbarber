@@ -1,6 +1,6 @@
-<div class="col-md-4">
+<div class="col-md-4 centered roundedBorder">
   <h1>Login to Backyard Barber</h1>
-  <div ng-show="error" class="alert alert-danger"></div>
+  <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
   <form class="form" ng-submit="login()">
     <div class="form-group">
       <label>Serial Number</label>
@@ -14,7 +14,7 @@
       <button type="submit" class="btn btn-default" ng-disabled="disabled">Login</button>
     </div>
   </form>
-  <br>
-  <div>New mower?</div>
-  <button class="btn btn-default" ng-controller="loginController" onclick="register()">Register</button>
+  <br><br>
+  <div class="pull-right">New mower?</div><br>
+  <a ng-controller="loginController" ng-click='register()' class="btn btn-default pull-right">Register</a>
 </div>

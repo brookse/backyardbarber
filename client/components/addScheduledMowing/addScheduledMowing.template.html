@@ -1,37 +1,57 @@
-<div class="AddScheduledMowing-inner">
+<div ng-controller="addScheduleModalController">
+
   <div class="modal-header">
     <h4 class="modal-title">Add New Schedule</h4>
   </div>
   <div class="modal-body addScheduledMowing">
-    <form role="form" name="addScheduleForm">
-      <div class="row space-below">
-        <div class="col-sm-offset-3" ng-messages="addSensorForm.$error">
-          <div class="errors" ng-message="server">{{error}}</div>
-        </div>
+    <form role="form" name="addScheduleForm" ng-controller="addScheduleModalController" ng-submit="ok()">
+      <label><h5>Days</h5></label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Sunday">Sunday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Monday">Monday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Tuesday">Tuesday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Wednesday">Wednesday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Thursday">Thursday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Friday">Friday
+      </label><br>
+      <label class="col-md-2 col-md-offset-2">
+        <input type="checkbox" ng-model="days.Saturday">Saturday
+      </label><br>
+
+      <label><h5>Time</h5></label>
+      <div class="form-inline">
+        <select ng-model="hour" class="form-control">
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option>
+          <option>10</option><option>11</option><option>12</option>
+        </select> :
+        <select ng-model="minute" class="form-control">
+          <option>00</option><option>15</option><option>30</option>
+          <option>45</option>
+        </select>
+        <select ng-model="ampm" class="form-control">
+          <option>am</option><option>pm</option>
+        </select>
       </div>
-      <div class="row">
-        <div class="form-group col-xs-12">
-          <label for="cust-name">Days</label>
-          <!-- add the day selection -->
-          <span class="input-group-addon">
-            <input type="checkbox" aria-label="Sunday"><br>
-            <input type="checkbox" aria-label="Monday"><br>
-            <input type="checkbox" aria-label="Tuesday"><br>
-            <input type="checkbox" aria-label="Wednesday"><br>
-            <input type="checkbox" aria-label="Thursday"><br>
-            <input type="checkbox" aria-label="Friday"><br>
-            <input type="checkbox" aria-label="Saturday"><br>
-          </span>
-        </div>
-        <div class="form-group col-xs-12">
-          <label for="cust-name">Time</label>
-          <!-- add the time selection -->
-          </div>
+      <div class="modal-footer">
+        <div class="alert alert-info" ng-model="confirmdialogue" style="width:15%; top:-10px; text-align:center; margin:auto; visibility:hidden;">Schedule saved!</div>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="ok()">Add</button>
       </div>
     </form>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-    <button type="button" class="btn btn-primary" ng-click="ok()">Add</button>
-  </div>
+
+
+
 </div>
