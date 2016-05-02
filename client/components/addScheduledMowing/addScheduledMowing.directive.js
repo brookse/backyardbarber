@@ -19,9 +19,18 @@ function($scope, $location, $timeout, ScheduleService) {
         selectedDays.push(day);
       }
     }
+    var finalHour = $scope.hour;
+    if ($scope.ampm == "pm") {
+      finalHour = parseInt(finalHour) + 12;
+    }
+
     ScheduleService.saveSchedule({
       days: $scope.days,
-      time: $scope.hour +":"+ $scope.minute +" "+$scope.ampm
+      time: {
+        hour: finalHour,
+        minute: $scope.minute,
+        ampm: $scope.ampm
+      }
     });
     $scope.addScheduleForm = {};
     // briefly show confirmation dialogue

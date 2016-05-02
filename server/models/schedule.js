@@ -5,7 +5,11 @@ var mongoose = require('mongoose'),
 
 var Schedule = new Schema({
   days: [],
-  time: String,
+  time: {
+    hour: Number,
+    minute: Number,
+    ampm: String
+  },
   mowerSN: String
 });
 
