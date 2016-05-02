@@ -39,6 +39,7 @@ class Pathfinder:
         blocked = False
         start = None
         print ("start " + str(datetime.now()))
+        
         self.graph = GridWithWeights(self.length,self.width)
         
         self.collection.update_many({'edge':True},{'$set':{'edge':False}})
@@ -59,46 +60,57 @@ class Pathfinder:
         startingPoint = self.collection.find_one({'inX':int(self.centerDistance),'inY':int(self.centerDistance)})
         self.startId = startingPoint["_id"]
         
-        pathfile = open("path.txt", 'a')
-        pathfile.write("New path generated at: " + str(datetime.now()))
+        #pathfile = open("path.txt", 'a')
+        #pathfile.write("New path generated at: " + str(datetime.now()))
+        
+        invalidNodes = self.collection.find({"$or": [{"blocked": True}, {"edge": True}]})
+        invalidTuples = []
+        for invalidNode in invalidNodes:
+            invalidTuples.append((invalidNode["inX"],invalidNode["inY"]))
         
         for x in range(int(self.centerDistance), self.width, self.cutDiameter-3):
             print(str(x) + " " + str(datetime.now()))
             if ascending:
                 for y in range(int(self.centerDistance), self.length-int(self.centerDistance), (self.cutDiameter-3)):
-                    node = self.collection.find_one({'inX':x, 'inY':y})
-                    if not node["edge"] and not node["blocked"]:
+                    if (x,y) not in invalidTuples:
                         if not blocked:
-                            self.path.append(node["_id"])
+                            self.path.append((x,y))
                         else:
-                            self.path.extend(self.handleBlocked(start, node))
+                            self.path.extend(self.handleBlocked(start, (x,y)))
                             blocked = False
                     elif not blocked:
-                        start = self.collection.find_one({"_id":self.path[-1]})
+                        start = self.path[-1]
                         blocked = True
                 ascending = False
             else:
                 for y in range(self.length-int(self.centerDistance)-1, int(self.centerDistance) +1, -(self.cutDiameter-3)):
-                    node = self.collection.find_one({'inX':x, 'inY':y})
-                    if not node["edge"] and not node["blocked"]:
+                    if (x,y) not in invalidTuples:
                         if not blocked:
-                            self.path.append(node["_id"])
+                            self.path.append((x,y))
                         else:
-                            self.path.extend(self.handleBlocked(start, node))
+                            self.path.extend(self.handleBlocked(start, (x,y)))
                             blocked = False
                     elif not blocked:
-                        start = self.collection.find_one({"_id":self.path[-1]})
+                        start = self.path[-1]
                         blocked = True
                 ascending = True
                 
         print ("length: " + str(len(self.path)))
         print("Got points: " + str(datetime.now()))
         
+        self.db.path.remove()
+        
         for id in self.path:
-            pathfile.write("\n"+str(id))
+            result = self.db.path.insert_one(
+                {
+                    "inX":id[0],
+                    "inY":id[1],
+                    "index":self.path.index(id)
+                }
+            )
                 
-        print("File write finished: " + str(datetime.now()))
-        pathfile.close()
+        print("DB write finished: " + str(datetime.now()))
+        #pathfile.close()
         
     def buildMap(size):
         if size == 0:
@@ -119,24 +131,24 @@ class Pathfinder:
                 )
     
     def handleBlocked(self, node, next):
-        print ("Handle blocked: " + str(node["_id"]), str(next["_id"]) + str(datetime.now()))
-        start = (node["inX"],node["inY"])
-        goal = (next["inX"],next["inY"])
+        print ("Handle blocked: " + str(node), str(next) + str(datetime.now()))
+      #  start = (node["inX"],node["inY"])
+       # goal = (next["inX"],next["inY"])
         if self.graph == None:
             self.graph = GridWithWeights(self.length,self.width)
-        came_from, cost_so_far = self.a_star_search(self.graph, start, goal)
+        came_from, cost_so_far = self.a_star_search(self.graph, node, next)
         print ("Completed: " + str(datetime.now()))
-        current = goal
+        current = next
         path = [current]
-        while current != start:
+        while current != node:
             current = came_from[current]
             path.append(current)
         path.reverse()
-        idPath = []
+        '''idPath = []
         for item in path:
             dbNode = self.collection.find_one({'inX':item[0], 'inY':item[1]})
-            idPath.append(dbNode["_id"])
-        return idPath
+            idPath.append(dbNode["_id"])'''
+        return path
         
     def a_star_search(self, graph, start, goal): 
         frontier = PriorityQueue()
