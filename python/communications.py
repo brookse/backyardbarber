@@ -50,20 +50,30 @@ class Communications():
             status = message[4]
             if status == '?':
                 # error
-                #             version      |stat|bound         | target coords (x,y)                                         | timestamp        |degree
-                #self.send(('\x00\x00\x00\x00\x21\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'))
-                self.send("error")
+                #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
+                bytes = bytearray([0x00,0x00,0x00,0x00,0x21,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                self.send(bytes)
             elif status == 'G':
                 # in progress
                 # do not respond, continue
-                print("continue")
+                #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
+                bytes = bytearray([0x00,0x00,0x00,0x00,0x43,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                self.send(bytes)
             elif status == 'S':
                 # destination reached
                 #             version      |stat|bound         | target coords (x,y) | timestamp        |degree
                 x = self.path[self.index]["inX"]
                 y = self.path[self.index]["inY"]
-                send(str(x) + ", " +str(y))
-                #self.send(('\x00\x00\x00\x00\x46\x00\x00\x00\x00'+hex(x)+hex(y)+      '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'))
+                print(str(x) + ", " +str(y))
+                #                        version      |stat |bound              | target coords (x,y)                                                          
+                
+                bytes = bytearray([0x00,0x00,0x00,0x00,0x46,0x00,0x00,0x00,0x00])
+                bytes.append(bytes(x))
+                bytes.append(bytes(y))
+                #                   timestamp          |degree
+                bytes2 = bytearray([0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                bytes.append(bytes2)
+                self.send(bytes)
                 if self.interrupted == True:
                     self.interrupted = False
                 else:
@@ -72,18 +82,18 @@ class Communications():
                         terminated = True
             elif status == 'T':
                 # tipped
-                #             version      |stat|bound         | target coords (x,y)                                         | timestamp        |degree
-                #self.send(('\x00\x00\x00\x00\x21\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'))
-                self.send("tipped")
+                #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
+                bytes = bytearray([0x00,0x00,0x00,0x00,0x21,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                self.send(bytes)
             elif status == 'B':
                 # blocked
-                #             version      |stat|bound         | target coords (x,y)                                         | timestamp        |degree
-                #self.send(('\x00\x00\x00\x00\x21\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'))
-                self.send("blocked")
+                #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
+                bytes = bytearray([0x00,0x00,0x00,0x00,0x21,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                self.send(bytes)
         
     def send(self, message):
         print("send message: " + message)
-        #self.xbee.send("tx", dest_addr='\xFF\xFF', dest_addr_long='\x00\x13\xAZ\x00\x40\xE6\x5B\xBD', data=message)
+        self.xbee.send("tx", dest_addr=bytearray([0xFF,0xFF]) dest_addr_long=bytearray([0x00,0x13,0xAZ,0x00,0x40,0xE6,0x5B,0xBD]), data=message)
         
     def interrupt(self, message, terminate):
         self.interrupted = True
