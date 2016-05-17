@@ -26,8 +26,11 @@ class Controller():
         self.pathBuilt = True
         
     def startMower(self):
-        Controller.coms.run()
-        Controller.running = True
+        if self.pathBuilt == False:
+            self.buildPath()
+        if Controller.running == False:
+            Controller.coms.run()
+            Controller.running = True
         # tell node that we started
         
     def interrupt(self, message, terminate):
