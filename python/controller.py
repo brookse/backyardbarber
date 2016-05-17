@@ -7,7 +7,6 @@ from pymongo import MongoClient
 class Controller():
     coms = Communications(0)
     running = False
-    pathBuilt = False
     
     def __init__(self, cutDiameter, mowerLength, turnRadius, centerDistance, length, width, startingIndex):
         self.client = MongoClient()
@@ -20,19 +19,20 @@ class Controller():
         self.centerDistance = centerDistance
         self.length = length
         self.width = width
+        self.pathBuilt = (self.db.path.find().count > 0)
         
     def buildPath(self):
         self.finder.buildBasePath()
-        pathBuilt = True
+        self.pathBuilt = True
         
-    def startMower():
-        coms.run()
-        running = True
+    def startMower(self):
+        Controller.coms.run()
+        Controller.running = True
         # tell node that we started
         
     def interrupt(self, message, terminate):
-        coms.interrupt(message, terminate)
-        running = False
+        Controller.coms.interrupt(message, terminate)
+        Controller.running = False
         
     def schedule(self):
         cron = CronTab()

@@ -7,9 +7,9 @@ from pymongo import MongoClient
 
 class Communications():
     def __init__(self, startingIndex):
-        self.client = MongoClient()
-        self.db = self.client.pidb
-        self.collection = self.db.path
+       # self.client = MongoClient()
+       # self.db = self.client.pidb
+       # self.collection = self.db.path
         # set up serial
         self.PORT = '/dev/ttyAMA0'
         self.BAUD_RATE = 9600
@@ -18,7 +18,7 @@ class Communications():
         self.xbee = ZigBee(self.ser)
         self.threads = []
         self.startingGPS = ""
-        self.path = self.collection.find().sort("index", pymongo.ASCENDING)
+        self.path = [(0.0,0.0),(0.0,1.0),(0.0,2.0),(0.0,3.0),(0.0,5.0),(10.0,10.0)]#self.collection.find().sort("index", pymongo.ASCENDING)
         self.index = startingIndex
         self.interrupted = False
         self.terminated = False
@@ -47,7 +47,11 @@ class Communications():
         if response['name'] != "rx_explicit": # otherwise ack packet
             #normal packet, message = bytestring
             message = response['data'].decode('utf-8')
+            print ("message: " + str(message))
+            version = message[:4]
+            print ("version: " + str(int(version)))
             status = message[4]
+            print ("status: " + str(status))
             if status == '?':
                 # error
                 #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
@@ -62,8 +66,8 @@ class Communications():
             elif status == 'S':
                 # destination reached
                 #             version      |stat|bound         | target coords (x,y) | timestamp        |degree
-                x = self.path[self.index]["inX"]
-                y = self.path[self.index]["inY"]
+                x = self.path[self.index][0]#["inX"]
+                y = self.path[self.index][1]#["inY"]
                 print(str(x) + ", " +str(y))
                 #                        version      |stat |bound              | target coords (x,y)                                                          
                 
@@ -90,10 +94,12 @@ class Communications():
                 #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
                 bytes = bytearray([0x00,0x00,0x00,0x00,0x21,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
                 self.send(bytes)
+        else:
+            print "Ack packet"
         
     def send(self, message):
-        print("send message: " + message)
-        self.xbee.send("tx", dest_addr=bytearray([0xFF,0xFF]) dest_addr_long=bytearray([0x00,0x13,0xAZ,0x00,0x40,0xE6,0x5B,0xBD]), data=message)
+        print("send message: " + message)                                                         #0xAZ
+        self.xbee.send("tx", dest_addr=bytearray([0xFF,0xFF]), dest_addr_long=bytearray([0x00,0x13,0xA2,0x00,0x40,0xE6,0x5B,0xBD]), data=message)
         
     def interrupt(self, message, terminate):
         self.interrupted = True
