@@ -1,6 +1,6 @@
 angular.module('myApp').controller('statusController',
-['$scope', '$location', '$timeout', 'AuthService', 'WeatherService',
-function($scope, $location, $timeout, AuthService, WeatherService) {
+['$scope', '$location', '$timeout', 'AuthService', 'WeatherService', 'CommService',
+function($scope, $location, $timeout, AuthService, WeatherService, CommService) {
   var statuses = ["Charging", "Error", "Idle", "Mowing", "Dead", "On Fire"];
   var statusDetails = [
     "The mower is in the charging dock.",
@@ -112,6 +112,8 @@ function($scope, $location, $timeout, AuthService, WeatherService) {
   ];
 
   $scope.stopMower = function() {
+    CommService.stopMower();
+
     $scope.stopping = true;
     $scope.stopStatus = stoppingStatuses[0];
     $timeout(function(){
@@ -147,6 +149,8 @@ function($scope, $location, $timeout, AuthService, WeatherService) {
   ];
 
   $scope.beginMower = function() {
+    CommService.startMower();
+    
     $scope.beginning = true;
     $scope.beginStatus = beginningStatuses[0];
     $timeout(function(){
