@@ -11,7 +11,7 @@ class Controller():
     
     def __init__(self, cutDiameter, mowerLength, turnRadius, centerDistance, length, width, startingIndex):
         self.client = MongoClient()
-        self.db = self.client.pidb
+        self.db = self.client.backyardbarber
         self.collection = self.db.schedules
         self.finder = Pathfinder(cutDiameter, mowerLength, turnRadius, centerDistance, length, width)
         self.cutDiameter = cutDiameter

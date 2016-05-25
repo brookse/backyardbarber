@@ -15,25 +15,27 @@ class Pathfinder:
     def __init__(self, cutDiameter, mowerLength, turnRadius, centerDistance, length, width):
         self.path = []
         self.client = MongoClient()
-        self.db = self.client.pidb
-        self.collection = self.db.mapnodes
+        self.db = self.client.backyardbarber
+        self.yards = self.db.yards
+        self.yard = self.yards.find_one({'length':int(length), 'width':int(width)})
+        self.map = self.yard["map"]
+        self.collection = self.db.currentMap
+        self.collection.remove()
+        for node in self.map:
+            self.collection.insert(node)
         self.hasMap = True # Will repopulate the database if False
         self.startId = -1
         self.endId = -1
-        self.cutDiameter = 19
-        self.mowerLength = 42
-        self.turnRadius = 16.5
-        self.centerDistance = 22.5
-        self.length = 1200
-        self.width = 1200
+        self.cutDiameter = cutDiameter
+        self.mowerLength = mowerLength
+        self.turnRadius = turnRadius
+        self.centerDistance = centerDistance
+        self.length = length
+        self.width = width
         self.graph = None
         print("init")
         
     def buildBasePath(self):
-        #cutDiameter = 19
-        #mowerLength = 42
-        #turnRadius = 16.5
-        #centerDistance = 22.5
         ascending = True
         blocked = False
         start = None
@@ -47,7 +49,7 @@ class Pathfinder:
         result = self.collection.update_many({'inX':{'$gt':int(self.width - self.centerDistance)}, 'inY':{'$gt':int(self.length - self.centerDistance)}},{'$set':{'edge':True}})
         edges = self.collection.find({'edge':True})
         
-        self.collection.update_one({'inX':{'$eq':75}, 'inY':{'$eq':75}}, {'$set':{'blocked':True}})
+        self.collection.update_one({'inX':75, 'inY':75}, {'$set':{'blocked':True}})
         
         blockedItems = self.collection.find({'blocked':True})
         for item in blockedItems:
@@ -58,9 +60,6 @@ class Pathfinder:
         
         startingPoint = self.collection.find_one({'inX':int(self.centerDistance),'inY':int(self.centerDistance)})
         self.startId = startingPoint["_id"]
-        
-        #pathfile = open("path.txt", 'a')
-        #pathfile.write("New path generated at: " + str(datetime.now()))
         
         invalidNodes = self.collection.find({"$or": [{"blocked": True}, {"edge": True}]})
         invalidTuples = []
@@ -109,7 +108,6 @@ class Pathfinder:
             )
                 
         print("DB write finished: " + str(datetime.now()))
-        #pathfile.close()
         
     def buildMap(size):
         if size == 0:

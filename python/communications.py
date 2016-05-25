@@ -8,7 +8,7 @@ from pymongo import MongoClient
 class Communications():
     def __init__(self, startingIndex):
         self.client = MongoClient()
-        self.db = self.client.pidb
+        self.db = self.client.backyardbarber
         self.collection = self.db.path
         # set up serial
         self.PORT = '/dev/ttyAMA0'
