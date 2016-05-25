@@ -7,9 +7,9 @@ from pymongo import MongoClient
 
 class Communications():
     def __init__(self, startingIndex):
-       # self.client = MongoClient()
-       # self.db = self.client.pidb
-       # self.collection = self.db.path
+        self.client = MongoClient()
+        self.db = self.client.pidb
+        self.collection = self.db.path
         # set up serial
         self.PORT = '/dev/ttyAMA0'
         self.BAUD_RATE = 9600
@@ -27,7 +27,7 @@ class Communications():
     def run(self):      
         # spin out listening thread
         coms = threading.Thread(target=self.listen)
-        threads.append(coms)
+        self.threads.append(coms)
         coms.start()
         
     def listen(self):
@@ -36,14 +36,20 @@ class Communications():
             try:
                 response = "r"
                 response = self.xbee.wait_read_frame()
-                if response!= "r":
-                    self.process(response)
+                self.process(response)
                     
             except KeyboardInterrupt:
                 break
         print("\ndone listening")
         
     def process(self, response):
+        if response == "r":
+            bytes1 = '\x46\x46\x46\x46\x46\x46\x46\x46\x46\x46\x46\x46\x46\x46\x46\x46'
+            self.send(bytes1)
+            print self.index
+            if self.index >= len(self.path):
+                self.terminated = True
+                
         if response['name'] != "rx_explicit": # otherwise ack packet
             #normal packet, message = bytestring
             message = response['data'].decode('utf-8')
@@ -55,13 +61,13 @@ class Communications():
             if status == '?':
                 # error
                 #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
-                bytes = bytearray([0x00,0x00,0x00,0x00,0x21,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                bytes = '\x00\x00\x00\x00\x21\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
                 self.send(bytes)
             elif status == 'G':
                 # in progress
                 # do not respond, continue
                 #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
-                bytes = bytearray([0x00,0x00,0x00,0x00,0x43,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                bytes = '\x00\x00\x00\x00\x43\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
                 self.send(bytes)
             elif status == 'S':
                 # destination reached
@@ -71,35 +77,41 @@ class Communications():
                 print(str(x) + ", " +str(y))
                 #                        version      |stat |bound              | target coords (x,y)                                                          
                 
-                bytes = bytearray([0x00,0x00,0x00,0x00,0x46,0x00,0x00,0x00,0x00])
-                bytes.append(bytes(x))
-                bytes.append(bytes(y))
+                bytes1 = '\x00\x00\x00\x00\x46\x00\x00\x00\x00'
+                print(str(x).encode("gbk"))
+                print(str(y).encode("gbk"))
+                bytes1 = bytes1+x
+                bytes1 = bytes1+y
                 #                   timestamp          |degree
-                bytes2 = bytearray([0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
-                bytes.append(bytes2)
-                self.send(bytes)
+                bytes2 = '\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00'
+                bytes1 = bytes1+bytes2
+                self.send(bytes1)
                 if self.interrupted == True:
                     self.interrupted = False
                 else:
-                    index += 1
-                    if index >= self.path.length:
-                        terminated = True
+                    self.index += 1
+                    if iself.ndex >= len(self.path):
+                        self.terminated = True
             elif status == 'T':
                 # tipped
                 #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
-                bytes = bytearray([0x00,0x00,0x00,0x00,0x21,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                bytes = '\x00,\x00,\x00,\x00,\x21,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00'
                 self.send(bytes)
             elif status == 'B':
                 # blocked
                 #                        version      |stat |bound              | target coords (x,y)                                                          | timestamp          |degree
-                bytes = bytearray([0x00,0x00,0x00,0x00,0x21,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+                bytes = '\x00,\x00,\x00,\x00,\x21,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00,\x00'
                 self.send(bytes)
+            else:
+                # unknown status
+                bytes1 = '\x00\x00\x00\x00\x21'
+                self.send(bytes1)
         else:
             print "Ack packet"
         
     def send(self, message):
-        print("send message: " + message)                                                         #0xAZ
-        self.xbee.send("tx", dest_addr=bytearray([0xFF,0xFF]), dest_addr_long=bytearray([0x00,0x13,0xA2,0x00,0x40,0xE6,0x5B,0xBD]), data=message)
+        print("send message: " + message)                                                         
+        self.xbee.send("tx", dest_addr='\xFF\xFF', dest_addr_long='\x00,\x13,\xA2,\x00,\x40,\xE6,\x5B,\xBD', data=message)
         
     def interrupt(self, message, terminate):
         self.interrupted = True

@@ -4,7 +4,6 @@
 import pymongo
 from datetime import datetime
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 import geopy
 from geopy.distance import vincenty
 import sys
@@ -132,8 +131,6 @@ class Pathfinder:
     
     def handleBlocked(self, node, next):
         print ("Handle blocked: " + str(node), str(next) + str(datetime.now()))
-      #  start = (node["inX"],node["inY"])
-       # goal = (next["inX"],next["inY"])
         if self.graph == None:
             self.graph = GridWithWeights(self.length,self.width)
         came_from, cost_so_far = self.a_star_search(self.graph, node, next)
@@ -144,10 +141,6 @@ class Pathfinder:
             current = came_from[current]
             path.append(current)
         path.reverse()
-        '''idPath = []
-        for item in path:
-            dbNode = self.collection.find_one({'inX':item[0], 'inY':item[1]})
-            idPath.append(dbNode["_id"])'''
         return path
         
     def a_star_search(self, graph, start, goal): 
@@ -187,20 +180,5 @@ class Pathfinder:
         (x1, y1) = a
         (x2, y2) = b
         return abs(x1 - x2) + abs(y1 - y2)
-    '''def getNext(self, current):
-        client = MongoClient()
-        db = client.pidb
-        collection = db.mapnodes
-        print("Current: " + str(current))
-        
-        node = collection.find_one({'_id':ObjectId(current)})
-        print(node)
-        next = collection.find_one({'inX':(node["inX"] + 19), 'inY':node["inY"]})
-        print next["_id"]
-        return next'''
-
-'''if __name__ == '__main__':
-    run(sys.argv)'''
-
 
 

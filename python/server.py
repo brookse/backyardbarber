@@ -1,4 +1,5 @@
 import sys, zerorpc
+from controller import Controller
 
 class ServerRPC(object):
     '''pass the method a name, it replies "Hello name!"'''

@@ -5,8 +5,9 @@ import pymongo
 from pymongo import MongoClient
 
 class Controller():
-    coms = Communications(0)
-    running = False
+    coms = None
+    running = None
+    controller = None
     
     def __init__(self, cutDiameter, mowerLength, turnRadius, centerDistance, length, width, startingIndex):
         self.client = MongoClient()
@@ -20,6 +21,12 @@ class Controller():
         self.length = length
         self.width = width
         self.pathBuilt = (self.db.path.find().count > 0)
+        if Controller.coms is None:
+            Controller.coms = Communications(0)
+        if Controller.running is None:
+            Controller.running = False
+        if Controller.controller is None:
+            Controller.controller = self
         
     def buildPath(self):
         self.finder.buildBasePath()
