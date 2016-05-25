@@ -1,6 +1,6 @@
 angular.module('myApp').controller('createYardController',
-['$scope', '$location', 'AuthService', 'YardService',
-function($scope, $location, AuthService, YardService) {
+['$scope', '$location', 'AuthService', 'YardService', 'CommService',
+function($scope, $location, AuthService, YardService, CommService) {
 
   $scope.createYard = function() {
     console.log('yard created - length: ',$scope.createForm.length,' width: ',$scope.createForm.width);
@@ -14,6 +14,7 @@ function($scope, $location, AuthService, YardService) {
     }).catch(function(error) {
       console.log('error saving new yard:', error);
     });
+    CommService.updateYard();
 
     $scope.createForm = {};
   };
