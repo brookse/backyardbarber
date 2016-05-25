@@ -1,6 +1,6 @@
 angular.module('myApp').factory('CommService',
-  ['$q', '$timeout', '$http',
-  function($q, $timeout, $http) {
+  ['$q', '$timeout', '$http', 'AuthService',
+  function($q, $timeout, $http, AuthService) {
 
     return({
       stopMower: stopMower,
