@@ -2,12 +2,12 @@ var express = require('express'),
     router = express.Router(),
     PythonShell = require('python-shell');
 
-var pyshell = new PythonShell('/python/server.py', {
-  mode: 'text'
-});
-
 /* Stop the mower */
 router.get('/:id/stop', function(req, res) {
+  var pyshell = new PythonShell('/python/server.py', {
+    mode: 'text'
+  });
+
   pyshell.send('interrupt');
 
   pyshell.on('interrupt', function(message) {
@@ -31,6 +31,10 @@ router.get('/:id/stop', function(req, res) {
 
 /* Start the mower */
 router.get('/:id/start', function(req, res) {
+  var pyshell = new PythonShell('/python/server.py', {
+    mode: 'text'
+  });
+
   pyshell.send('startMower');
 
   pyshell.on('startMower', function(message) {
@@ -54,6 +58,10 @@ router.get('/:id/start', function(req, res) {
 
 /* Notify of yard update */
 router.get('/:id/updateYard', function(req, res) {
+  var pyshell = new PythonShell('/python/server.py', {
+    mode: 'text'
+  });
+  
   pyshell.send('buildPath');
 
   pyshell.on('buildPath', function(message) {
@@ -77,6 +85,10 @@ router.get('/:id/updateYard', function(req, res) {
 
 /* Notify of schedule updated */
 router.get('/:id/updateSchedules', function(req, res) {
+  var pyshell = new PythonShell('/python/server.py', {
+    mode: 'text'
+  });
+
   pyshell.send('schedule');
 
   pyshell.on('schedule', function(message) {
