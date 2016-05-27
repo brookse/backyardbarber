@@ -1,23 +1,27 @@
 var express = require('express'),
     router = express.Router(),
     PythonShell = require('python-shell');
+
 var pyoption = '-u';
 var pypath = '/usr/bin/python';
+
 /* Stop the mower */
 router.get('/:id/stop', function(req, res) {
   console.log('start stopping shell');
-  var pyshell = new PythonShell('server.py', {
+  var pyshell = new PythonShell('stopMower.py', {
     mode: 'text',
     pythonPath: pypath,
     pythonOptions: [pyoption],
     scriptPath: '././python'
   });
   console.log('stopping shell started');
-  
+
   pyshell.send('interrupt').end(function(err) {
     if(err) console.log('err:',err);
   });
-  console.log('send stop');
+
+  console.log('stop mower sent');
+
   pyshell.on('interrupt', function(message) {
     console.log('interrupt:',message);
 
@@ -40,16 +44,20 @@ router.get('/:id/stop', function(req, res) {
 /* Start the mower */
 router.get('/:id/start', function(req, res) {
   console.log('start starting shell');
-  var pyshell = new PythonShell('server.py', {
+  var pyshell = new PythonShell('startMower.py', {
     mode: 'text',
     pythonPath: pypath,
     pythonOptions: [pyoption],
     scriptPath: '././python'
   });
+
   console.log('starting shell started');
+
   pyshell.send('startMower').end(function(err) {
     console.log('err:',err);
   });
+
+  console.log('start mower sent');
 
   pyshell.on('startMower', function(message) {
     console.log('startMower:',message);
@@ -72,11 +80,20 @@ router.get('/:id/start', function(req, res) {
 
 /* Notify of yard update */
 router.get('/:id/updateYard', function(req, res) {
-  var pyshell = new PythonShell('/python/server.py', {
-    mode: 'text'
+  console.log('start build path shell');
+  var pyshell = new PythonShell('buildPath.py', {
+    mode: 'text',
+    pythonPath: pypath,
+    pythonOptions: [pyoption],
+    scriptPath: '././python'
   });
-  
-  pyshell.send('buildPath');
+  console.log('stop build path shell');
+
+  pyshell.send('buildPath').end(function(err) {
+    console.log('err:',err);
+  });
+
+  console.log('build path sent');
 
   pyshell.on('buildPath', function(message) {
     console.log('buildPath:',message);
