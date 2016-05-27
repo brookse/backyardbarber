@@ -1,15 +1,23 @@
 var express = require('express'),
     router = express.Router(),
     PythonShell = require('python-shell');
-
+var pyoption = '-u';
+var pypath = '/usr/bin/python';
 /* Stop the mower */
 router.get('/:id/stop', function(req, res) {
-  var pyshell = new PythonShell('/python/server.py', {
-    mode: 'text'
+  console.log('start stopping shell');
+  var pyshell = new PythonShell('server.py', {
+    mode: 'text',
+    pythonPath: pypath,
+    pythonOptions: [pyoption],
+    scriptPath: '././python'
   });
-
-  pyshell.send('interrupt');
-
+  console.log('stopping shell started');
+  
+  pyshell.send('interrupt').end(function(err) {
+    if(err) console.log('err:',err);
+  });
+  console.log('send stop');
   pyshell.on('interrupt', function(message) {
     console.log('interrupt:',message);
 
@@ -31,11 +39,17 @@ router.get('/:id/stop', function(req, res) {
 
 /* Start the mower */
 router.get('/:id/start', function(req, res) {
-  var pyshell = new PythonShell('/python/server.py', {
-    mode: 'text'
+  console.log('start starting shell');
+  var pyshell = new PythonShell('server.py', {
+    mode: 'text',
+    pythonPath: pypath,
+    pythonOptions: [pyoption],
+    scriptPath: '././python'
   });
-
-  pyshell.send('startMower');
+  console.log('starting shell started');
+  pyshell.send('startMower').end(function(err) {
+    console.log('err:',err);
+  });
 
   pyshell.on('startMower', function(message) {
     console.log('startMower:',message);
