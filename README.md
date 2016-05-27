@@ -7,6 +7,9 @@ Clone repository and install dependencies:
 npm install
 bower install
 ```
+
+Ensure that <a href="https://github.com/zeromq/libzmq">libzmq</a> and <a href="http://zeromq.org/">ZeroMQ</a> are installed
+
 To run:
 Open database: `mongod`<br>
 If you get an error with mongo only allowing one instance of each type, open mongo shell and drop indexes on everything except user table. eg:<br>
