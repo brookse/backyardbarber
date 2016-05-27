@@ -1,6 +1,6 @@
 angular.module('myApp').factory('YardService',
-  ['$q', '$timeout', '$http', 'AuthService',
-  function($q, $timeout, $http, AuthService) {
+  ['$q', '$timeout', '$http', 'AuthService', 'CommService',
+  function($q, $timeout, $http, AuthService, CommService) {
     var obstacles = null;
     var yard = null;
     return({
@@ -116,6 +116,7 @@ angular.module('myApp').factory('YardService',
         .success(function(data, status) {
           if(status == 200 && data.status) {
             yard = data.yard;
+            CommService.updateYard();
             deferred.resolve();
           } else {
             deferred.reject();

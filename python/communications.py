@@ -117,5 +117,5 @@ class Communications():
         self.interrupted = True
         if terminate == True:
             self.terminated = True
-        self.send(self, message)
+        self.send(message)
 
